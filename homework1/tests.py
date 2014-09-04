@@ -47,6 +47,7 @@ class WarmupTestCase(unittest.TestCase):
 class LineTestCase(unittest.TestCase):
     def test_lines(self):
         ''' Expects lines.py to accept a parameter to simulate raw_input '''
+        # TODO: Simulate a file handle with StringIO
         line_test = '''
 # A file
 one
@@ -61,6 +62,7 @@ three
         self.assertEqual(lines.lines(line_test), 4)
 class WordCountTestCase(unittest.TestCase):
     def test_word_count(self):
+        ''' expects wordcount.py to use a parameter to simulate stdin '''
         story = '''
 Long, long ago they'd found
   an int -- anda long.
