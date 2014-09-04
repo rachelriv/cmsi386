@@ -1,6 +1,8 @@
 #!/usr/bin/env python2
 from warmup import change, strip_quotes, scramble, powers_of_two, prefixes, interleave, stutter
 import lines
+import wordcount
+import fifa2014group
 import unittest
 
 
@@ -10,7 +12,8 @@ class WarmupTestCase(unittest.TestCase):
     def test_strip_quotes(self):
         self.assertEqual(strip_quotes("a\"\"\'\"\"\"\"z"), 'az')
     def test_scramble(self):
-        self.assertEqual
+        from collections import Counter
+        self.assertEqual(Counter(scramble('Hello, world')), Counter('Hello, world'))
     def test_powers_of_two(self):
         pow2 = powers_of_two(70)
         self.assertEqual(next(pow2), 1)
@@ -43,6 +46,7 @@ class WarmupTestCase(unittest.TestCase):
 
 class LineTestCase(unittest.TestCase):
     def test_lines(self):
+        ''' Expects lines.py to accept a parameter to simulate raw_input '''
         line_test = '''
 # A file
 one
@@ -57,11 +61,33 @@ three
         self.assertEqual(lines.lines(line_test), 4)
 class WordCountTestCase(unittest.TestCase):
     def test_word_count(self):
-        pass
+        story = '''
+Long, long ago they'd found
+  an int -- anda long.
+And a string!'''
+        expected_output = '''
+a 2
+ago 1
+an 1
+and 2
+found 1
+int 1
+long 3
+string 1
+they'd 1
+        '''
+        self.assertEqual(wordcount.wordcount(story), expected_output)
 
 class FifaTestCase(unittest.TestCase):
     def test_fifa(self):
-        pass
+        proper_group = '''
+Name             W  D  L
+Netherlands      3  0  0
+Chile            2  0  1
+Spain            1  0  2
+Australia        0  0  3
+        '''
+        self.assertEqual(fifa2014group.group('B'), proper_group)
 
 if __name__ == '__main__':
     unittest.main()
