@@ -6,7 +6,7 @@ import random
 def change(amount):
     """Returns the smallest number of coins to make up a given amount.
 
-    Returns a tuple containing The smallest number of US quarters,
+    Returns a tuple containing the smallest number of US quarters,
     nickels, and pennies that equal the given amount. Raises an
     exception if the amount given is not a postive number.
     """
