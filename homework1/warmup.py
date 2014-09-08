@@ -1,13 +1,13 @@
 #!/usr/bin/env python2
-"""A module containing some of the warm up functions assigned for cmsi386"""
+"""A module containing some of the warm up functions assigned for cmsi386."""
 
 import random
 
 
 def change(amount):
-    """Returns the smallest number of coins to make up a given amount.
+    """Return the smallest number of coins to make up a given amount.
 
-    Returns a tuple containing the smallest number of US quarters,
+    Return a tuple containing the smallest number of US quarters,
     nickels, and pennies that equal the given amount. Raises an
     exception if the amount given is not a postive number.
     """
@@ -20,17 +20,17 @@ def change(amount):
 
 
 def strip_quotes(s):
-    """Returns a string like s but without apostrophes or double quotes."""
+    """Return a string like s but without apostrophes or double quotes."""
     return s.translate(None, "\"\'")
 
 
 def scramble(s):
-    """Returns a random permutation of s."""
+    """Return a random permutation of s."""
     return "".join(random.sample(s, len(s)))
 
 
 def powers_of_two(n):
-    """Generates powers of two from 1 upto and including n"""
+    """Generate powers of two from 1 upto and including n."""
     result = 1
     while result <= n:
         yield result
@@ -38,7 +38,7 @@ def powers_of_two(n):
 
 
 def prefixes(s):
-    """Generates successive prefixes of a string.
+    """Generate successive prefixes of a string.
 
     Starts with the first prefix, which is zero characters long
     """
@@ -55,5 +55,5 @@ def interleave(a, b):
 
 
 def stutter(l):
-    """Returns a list containing the elements of list l doubled up."""
+    """Return a list containing the elements of list l doubled up."""
     return interleave(l, l)

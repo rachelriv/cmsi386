@@ -1,9 +1,11 @@
 #!/usr/bin/env python2
-"""A script that reads a file from standard input and writes,
- to standard output, a sequence of lines containing
-  (1) a word from the file,
-  (2) a single space, and
-  (3) the number of times the word appears in the file."""
+"""A script that reads from standard input and prints a sequence of lines.
+
+The lines contain:
+1. a word from the file,
+2. a single space, and
+3. the number of times the word appears in the file.
+"""
 
 import sys
 import re
