@@ -1,3 +1,0 @@
-Long, long agø they'd found
-  an int -- and a long.
-And a string!
