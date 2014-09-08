@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 """A module containing some of the warm up functions assigned for cmsi386"""
 
 import random

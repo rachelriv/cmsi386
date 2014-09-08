@@ -1,8 +1,11 @@
+#!/usr/bin/env python2
+# coding=utf-8
 from warmup import change, strip_quotes, scramble, \
     powers_of_two, prefixes, interleave, stutter
-import lines
+
 import subprocess
 import unittest
+import os
 
 
 class PythonWarmupTestCase(unittest.TestCase):
@@ -19,7 +22,7 @@ class PythonWarmupTestCase(unittest.TestCase):
 
     def test_strip_quotes(self):
         self.assertEqual(strip_quotes("a\"\"\'\"\"\"\"z"), 'az')
-        self.assertEqual(strip_quotes())
+        # self.assertEqual(strip_quotes())
 
     def test_scramble(self):
         from collections import Counter
@@ -63,28 +66,51 @@ class PythonWarmupTestCase(unittest.TestCase):
                          [5, 5, 'dog', 'dog', [3], [3], 9, 9])
 
 
-# class LineTestCase(unittest.TestCase):
+class LineTestCase(unittest.TestCase):
+    def setUp(self):
+        self.filename = 'example.txt'
+        file_lines = '# A file\n'
+        file_lines += 'one\n'
+        file_lines += '\n'
+        file_lines += '    two\n'
+        file_lines += '      # yep, commented\n'
+        file_lines += '###\n'
+        file_lines += '\n'
+        file_lines += 'three\n'
+        file_lines += '  F O U R\n'
+        with open(self.filename, 'w') as f:
+            f.write(file_lines)
+            f.flush()
 
-#     def setUp(self):
-#         lines = '''\
-# # A file
-# one
+    def test_lines(self):
+        args = ['python2', 'lines.py', self.filename]
+        p = subprocess.Popen(args, stdout=subprocess.PIPE)
+        self.assertEqual(int(p.communicate()[0].rstrip()), 4)
 
-#     two
-#       # yep, commented
-# ###
+    def tearDown(self):
+        os.remove(self.filename)
 
-# three
-#   F O U R
-# '''
-#         with open('example.txt', 'w') as f:
-#             f.write(lines)
-#             f.flush()
 
-#     def test_lines(self):
-#         args = ['lines.py', 'example.txt']
-#         p = subprocess.Popen(args, shell=True)
-#         self.assertEqual(p.communicate()[0], 4)
+class WordCountTestCase(unittest.TestCase):
+    def setUp(self):
+        self.story = "Long, long agø they'd found\n"
+        self.story += '  an int -- and a long.\n'
+        self.story += 'And a string!\n'
+        self.expected = 'a 2\n'
+        self.expected += 'ag 1\n'
+        self.expected += 'an 1\n'
+        self.expected += 'and 2\n'
+        self.expected += 'found 1\n'
+        self.expected += 'int 1\n'
+        self.expected += 'long 3\n'
+        self.expected += 'string 1\n'
+        self.expected += "they'd 1\n"
+
+    def test_wordcount(self):
+        p = subprocess.Popen(['python2', 'wordcount.py'],
+                             stdin=subprocess.PIPE,
+                             stdout=subprocess.PIPE)
+        self.assertEquals(p.communicate(input=self.story)[0], self.expected)
 
 
 if __name__ == '__main__':

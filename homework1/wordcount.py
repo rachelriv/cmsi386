@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 """A script that reads a file from standard input and writes,
  to standard output, a sequence of lines containing
   (1) a word from the file,
@@ -14,4 +15,4 @@ for line in sys.stdin:
     c.update(words)
 sorted_words = sorted(list(c.items()), key=lambda x: x[0])
 formatted_words = ['{0} {1}'.format(*pair) for pair in sorted_words]
-print "\n".join(formatted_words)
+print '\n'.join(formatted_words)
