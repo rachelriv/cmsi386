@@ -2,21 +2,26 @@
 import re
 import sys
 import requests
-from operator import itemgetter, attrgetter
-
+from operator import itemgetter
 
 
 def getAllTeams(group):
-    r = requests.get('http://worldcup.kimonolabs.com/api/teams?apikey=KERbxAUfDYovbQnn9pR3pbLWEMRp47AQ&group={group}&fields=name,wins,losses,draws,goalsDiff'.format(group=group))
+    base_url = 'http://worldcup.kimonolabs.com/api/teams'
+    req_string = (base_url + '?apikey={key}&group={group}&fields={fields}'
+                  .format(group=group,
+                          key='KERbxAUfDYovbQnn9pR3pbLWEMRp47AQ',
+                          fields='name,wins,losses,draws,goalsDiff'))
+    r = requests.get(req_string)
     return r.json()
+
 
 def displayTeams(teams):
     # https://wiki.python.org/moin/HowTo/Sorting
-    print teams
     sorted_teams = sorted(teams, cmp=comparator)
     print 'Name             W  D  L'
     for team in sorted_teams:
         print '{name:<17}{wins}  {draws}  {losses}'.format(**team)
+
 
 def comparator(key1, key2):
     if key1['wins'] != key2['wins']:
