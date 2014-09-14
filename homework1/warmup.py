@@ -42,8 +42,7 @@ def prefixes(s):
 
     Starts with the first prefix, which is zero characters long
     """
-    for i in range(len(s)+1):
-        yield s[0:i]
+    return (s[0:i] for i in range(len(s)+1))
 
 
 def interleave(a, b):
@@ -51,7 +50,7 @@ def interleave(a, b):
 
     http://stackoverflow.com/questions/1198777/double-iteration-in-list-comprehension
     """
-    return [y for x in zip(a, b) for y in x] + a[len(b):] + b[len(a):]
+    return [item for group in zip(a, b) for item in group] + a[len(b):] + b[len(a):]
 
 
 def stutter(l):
