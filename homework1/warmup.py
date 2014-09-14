@@ -49,7 +49,7 @@ def prefixes(s):
 def interleave(a, b):
     """Return the interleaving of two sequences as a list.
 
-    Idea for interleaving from cmsi386 lecture on 9-04-14.
+    http://stackoverflow.com/questions/1198777/double-iteration-in-list-comprehension
     """
     return [y for x in zip(a, b) for y in x] + a[len(b):] + b[len(a):]
 
