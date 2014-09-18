@@ -21,11 +21,10 @@ class PythonWarmupTestCase(unittest.TestCase):
         self.assertEqual(change(97), (3, 2, 0, 2))
         self.assertEqual(change(33.25), (1.0, 0.0, 1.0, 3.25))
         self.assertEqual(change(8), (0, 0, 1, 3))
-        self.assertEqual(change(250), (10, 0, 0, 0))
+        self.assertEqual(change(103), (4, 0, 0, 3))
         self.assertEqual(change(0), (0, 0, 0, 0))
-        self.assertEqual(change(41), (1, 1, 1, 1))
-        self.assertEqual(change(25000001), (1000000, 0, 0, 1))
-        self.assertRaises(ValueError, change, -201)
+        self.assertEqual(change(100000006), (4000000, 0, 1, 1))
+        self.assertRaises(ValueError, change, -1)
         self.assertRaises(TypeError, change, "foo")
 
     def test_strip_quotes(self):
@@ -33,6 +32,8 @@ class PythonWarmupTestCase(unittest.TestCase):
         self.assertEqual(strip_quotes("a\"\"\'\"\"\"\"z"), 'az')
         self.assertEqual(strip_quotes("a\'z\"ggeiohg\\53785\""),
                          'azggeiohg\\53785')
+        self.assertEqual(strip_quotes("\'\"\""),
+                         '')
 
     def test_scramble(self):
         """Test scrampling a string.
