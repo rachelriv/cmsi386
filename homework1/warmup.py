@@ -11,11 +11,12 @@ def change(amount):
     nickels, and pennies that equal the given amount. Raises an
     exception if the amount given is not a postive number.
     """
+    quarter_value, dime_value, nickel_value = 25, 10, 5
     if amount < 0:
         raise ValueError('amount cannot be negative')
-    quarters, rest = divmod(amount, 25)
-    dimes, rest = divmod(rest, 10)
-    nickels, pennies = divmod(rest, 5)
+    quarters, rest = divmod(amount, quarter_value)
+    dimes, rest = divmod(rest, dime_value)
+    nickels, pennies = divmod(rest, nickel_value)
     return (quarters, dimes, nickels, pennies)
 
 
