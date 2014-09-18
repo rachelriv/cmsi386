@@ -3,11 +3,9 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {
-    "chai": "*"
-  },
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "*",
+    "chai": "*"
   },
   "scripts": {
     "test": "mocha"
