@@ -1,0 +1,23 @@
+{
+  "name": "homework2",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "chai": "*"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rachelriv/cmsi386"
+  },
+  "bugs": {
+    "url": "https://github.com/rachelriv/cmsi386/issues"
+  },
+  "homepage": "https://github.com/rachelriv/cmsi386"
+}
