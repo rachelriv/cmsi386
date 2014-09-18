@@ -14,13 +14,11 @@ module.exports = {
         value %= dimeVal;
         changeArr.push(Math.floor(value / nickelVal));
         changeArr.push(value % nickelVal);
-        console.log(changeArr);
         return changeArr;
     },
 
     stripQuotes: function(start) {
-        var re = /['"]/;
-        return start.replace(/['"]/, '');
+        return start.replace(/['"]/g, '');
     },
 
     scramble: function(start) {
@@ -45,7 +43,7 @@ module.exports = {
 
     prefixes: function(str, callback) {
         var strArr = str.split('');
-        for(var i = 0; i < strArr.length; i++) {
+        for(var i = 0; i <= strArr.length; i++) {
             callback(strArr.slice(0, i).join(''));
         }
     },
@@ -60,12 +58,12 @@ module.exports = {
             returnArr.push(onArr1 ? arr1[index] : arr2[index]);
             onArr1 = !onArr1;
         }
-        returnArr.concat(arr1.slice(shortestLength));
-        returnArr.concat(arr2.slice(shortestLength));
+        returnArr = returnArr.concat(arr1.slice(shortestLength));
+        returnArr = returnArr.concat(arr2.slice(shortestLength));
         return returnArr;
     },
 
     stutter: function(arr) {
-        return interleave(arr, arr);
+        return this.interleave(arr, arr);
     }
 };

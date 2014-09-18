@@ -4,10 +4,10 @@ describe('warmup.js', function(){
     var warmup = require('../warmup.js');
     describe('change', function(){
         it('should return American change for a given cent amount, or throw a range error if negative', function(){
-            warmup.change(96).should.include.members([3, 2, 0, 1]);
-            warmup.change(8).should.include.members([0, 0, 1, 3]);
-            should.Throw(warmup.change(-9), RangeError, 'amount cannot be negative');
-            warmup.change(33.25).should.equal([1, 0, 1, 3.25]);
+            warmup.change(96).should.eql([3, 2, 0, 1]);
+            warmup.change(8).should.eql([0, 0, 1, 3]);
+            (function(){warmup.change(-9);}).should.throw(RangeError, 'amount cannot be negative');
+            warmup.change(33.25).should.eql([1, 0, 1, 3.25]);
         });
     });
 
@@ -27,7 +27,7 @@ describe('warmup.js', function(){
             warmup.powersOfTwo(70, function(p){
                 po2Arr.push(p);
             });
-            po2Arr.should.equal([1, 2, 4, 8, 16, 32, 64]);
+            po2Arr.should.eql([1, 2, 4, 8, 16, 32, 64]);
         });
     });
 
@@ -37,20 +37,20 @@ describe('warmup.js', function(){
             warmup.prefixes('brendan', function(p){
                 preArr.push(p);
             });
-            preArr.should.equal(['b', 'br', 'bre', 'bren', 'brend', 'brenda', 'brendan']);
+            preArr.should.eql(['', 'b', 'br', 'bre', 'bren', 'brend', 'brenda', 'brendan']);
         });
     });
 
     describe('interleave', function(){
         it('should interleave two arrays', function(){
-            warmup.interleave(['a', 'b'], [1, 2, true, null]).should.equal(["a", 1, "b", 2, true, null]);
-            warmup.interleave([7, 3, 'dog'], [false]).should.equal([7, false, 3, 'dog']);
+            warmup.interleave(['a', 'b'], [1, 2, true, null]).should.eql(["a", 1, "b", 2, true, null]);
+            warmup.interleave([7, 3, 'dog'], [false]).should.eql([7, false, 3, 'dog']);
         });
     });
 
     describe('stutter', function(){
         it('should double every element in the array', function(){
-            warmup.stutter([5,'dog',[3],9]).should.equal([5,5,'dog','dog',[3],[3],9,9]);
+            warmup.stutter([5,'dog',[3],9]).should.eql([5,5,'dog','dog',[3],[3],9,9]);
         });
     });
 });
