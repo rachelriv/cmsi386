@@ -21,29 +21,30 @@ def get_words(line):
     return re.split('[^a-zA-Z\']', line)
 
 
-def add_to_counter(counter, words):
-    """Add each word in the words list to a Counter instance.
+def add_to_counter(counter, keys):
+    """Add each key in the keys list to a Counter instance.
 
-    Each word in the words list should be a string.
-    All words are converted to lowercase prior to being inserted
+    Each key in the key list should be a string.
+    All key strings are converted to lowercase prior to being inserted
     into the Counter instance.
     """
-    counter.update(word.lower() for word in words if len(word) > 0)
+    counter.update(key.lower() for key in keys if key)
 
 
 def sort_pairs(counter):
     """Return a list representing the counter's pairs in sorted order.
 
-    Return a list of (key, count) pairs sorted by key.
+    Return a list of (key, count) tuples sorted by key.
     """
     return sorted(counter.items(), key=lambda x: x[0])
 
 
-def format(pairs):
+def format_pairs(pairs):
     """Return a formatted list of pairs.
 
-    Return a list of strings where each string is a key
-    and and value of the pair separated by a single space.
+    Return a list of strings where each string is the key
+    and value of a pair separated by a single space. pairs
+    should be a list of tuples.
     """
     return [' '.join(str(item) for item in pair) for pair in pairs]
 
@@ -52,6 +53,6 @@ c = Counter()
 for line in sys.stdin:
     words = get_words(line)
     add_to_counter(c, words)
-sorted_wordcounts = sort_pairs(c)
-formatted_wordcounts = format(sorted_wordcounts)
-print '\n'.join(formatted_wordcounts)
+sorted_wordcount_pairs = sort_pairs(c)
+formatted_wordcount_pairs = format_pairs(sorted_wordcount_pairs)
+print '\n'.join(formatted_wordcount_pairs)

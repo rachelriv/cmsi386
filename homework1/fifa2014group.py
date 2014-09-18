@@ -6,6 +6,7 @@ from operator import itemgetter
 
 
 def getAllTeams(group):
+    """Get all teams within a specified fifa2014 group."""
     base_url = 'http://worldcup.kimonolabs.com/api/teams'
     req_string = (base_url + '?apikey={key}&group={group}&fields={fields}'
                   .format(group=group,
@@ -16,6 +17,7 @@ def getAllTeams(group):
 
 
 def displayTeams(teams):
+    """Display team information in a table."""
     # https://wiki.python.org/moin/HowTo/Sorting
     sorted_teams = sorted(teams, cmp=comparator)
     print 'Name             W  D  L'
@@ -24,6 +26,12 @@ def displayTeams(teams):
 
 
 def comparator(key1, key2):
+    """Comparator for the teams.
+
+    Sort in descending order for number of wins.
+    If tied, sort in descending order for number of draws.
+    If tied, sort in ascending order for goals difference.
+    """
     if key1['wins'] != key2['wins']:
         return -cmp(key1['wins'], key2['wins'])
     elif key1['draws'] != key2['draws']:
