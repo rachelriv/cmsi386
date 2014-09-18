@@ -3,7 +3,7 @@ Use `pip -r requirements.txt` to install the dependencies.
 Running things in a virtualenv is prefered. To do so, run the following commands:
 
 ```bash
-# pip install virtualenv
+$ pip install virtualenv
 $ virtualenv ENV
 ```
 
