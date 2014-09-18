@@ -4,16 +4,16 @@ describe('warmup.js', function(){
     var warmup = require('../warmup.js');
     describe('change', function(){
         it('should return American change for a given cent amount, or throw a range error if negative', function(){
-            change(96).should.equal([3, 2, 0, 1]);
-            change(8).should.equal([0, 0, 1, 3]);
-            should.throw(change(-9), RangeError, 'amount cannot be negative');
-            change(33.25).should.equal([1, 0, 1, 3.25]);
+            warmup.change(96).should.include.members([3, 2, 0, 1]);
+            warmup.change(8).should.include.members([0, 0, 1, 3]);
+            should.Throw(warmup.change(-9), RangeError, 'amount cannot be negative');
+            warmup.change(33.25).should.equal([1, 0, 1, 3.25]);
         });
     });
 
     describe('stripQuotes', function(){
         it('should remove all quotes from a string', function(){
-            stripQuotes("a\"\"\'\"\"\"\"z").should.equal('az');
+            warmup.stripQuotes("a\"\"\'\"\"\"\"z").should.equal('az');
         });
     });
 
@@ -24,7 +24,7 @@ describe('warmup.js', function(){
     describe('powersOfTwo', function(){
         it('should call a callback for all powers of two less than a given number asynchrnously', function(){
             var po2Arr = [];
-            powersOfTwo(70, function(p){
+            warmup.powersOfTwo(70, function(p){
                 po2Arr.push(p);
             });
             po2Arr.should.equal([1, 2, 4, 8, 16, 32, 64]);
@@ -34,7 +34,7 @@ describe('warmup.js', function(){
     describe('prefixes', function(){
         it('should call a callback for all successive prefixes of a string', function(){
             var preArr = [];
-            prefixes('brendan', function(p){
+            warmup.prefixes('brendan', function(p){
                 preArr.push(p);
             });
             preArr.should.equal(['b', 'br', 'bre', 'bren', 'brend', 'brenda', 'brendan']);
@@ -43,14 +43,14 @@ describe('warmup.js', function(){
 
     describe('interleave', function(){
         it('should interleave two arrays', function(){
-            interleave(['a', 'b'], [1, 2, true, null]).should.equal(["a", 1, "b", 2, true, null]);
-            interleave([7, 3, 'dog'], [false]).should.equal([7, false, 3, 'dog']);
+            warmup.interleave(['a', 'b'], [1, 2, true, null]).should.equal(["a", 1, "b", 2, true, null]);
+            warmup.interleave([7, 3, 'dog'], [false]).should.equal([7, false, 3, 'dog']);
         });
     });
 
     describe('stutter', function(){
         it('should double every element in the array', function(){
-            stutter([5,'dog',[3],9]).should.equal([5,5,'dog','dog',[3],[3],9,9]);
+            warmup.stutter([5,'dog',[3],9]).should.equal([5,5,'dog','dog',[3],[3],9,9]);
         });
     });
 });
