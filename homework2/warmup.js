@@ -23,7 +23,7 @@ exports.stripQuotes = function(str) {
 exports.scramble = function(start) {
     // Fisher Yates shuffle from http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
     var shuffleArr = start.split('');
-    for(var i = 0; i < start.length; i++) {
+    for (var i = 0; i < start.length; i++) {
         var j = Math.floor(Math.random() * i);
         var shuffleI = shuffleArr[i];
         shuffleArr[i] = shuffleArr[j];
@@ -40,7 +40,7 @@ exports.powersOfTwo = function(limit, callback) {
 
 exports.prefixes = function(str, callback) {
     var strArr = str.split('');
-    for(var i = 0; i <= strArr.length; i++) {
+    for (var i = 0; i <= strArr.length; i++) {
         callback(strArr.slice(0, i).join(''));
     }
 };
@@ -50,11 +50,11 @@ exports.interleave = function(a, b) {
         bLen = b.length,
         maxLen = Math.max(aLen, bLen),
         returnArr = [];
-    for (var i = 0; i <  maxLen; i++) {
+    for (var i = 0; i < maxLen; i++) {
         if (i < aLen) {
             returnArr.push(a[i]);
         }
-        if (i < bLen){
+        if (i < bLen) {
             returnArr.push(b[i]);
         }
     }
