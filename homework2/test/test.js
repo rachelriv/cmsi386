@@ -19,7 +19,6 @@ describe('warmup.js', function(){
 
     describe('scramble', function(){
         it('should scramble the word', function(){
-            console.log(warmup.scramble('Hello, World!'));
             warmup.scramble('Hello, World!').split('').sort().should.eql('Hello, World!'.split('').sort());
         });
     });
