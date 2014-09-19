@@ -36,7 +36,7 @@ exports.powersOfTwo = function(limit, callback) {
     for (var x = 1; x <= limit; x *= 2) {
         callback(x);
     }
-}
+};
 
 exports.prefixes = function(str, callback) {
     var strArr = str.split('');
