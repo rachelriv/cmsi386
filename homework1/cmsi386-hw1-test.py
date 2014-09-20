@@ -34,12 +34,21 @@ class WarmupTestCase(unittest.TestCase):
         self.assertEqual(list(powers_of_two(64)), [1, 2, 4, 8, 16, 32, 64])
         self.assertEqual(list(powers_of_two(0)), [])
         self.assertEqual(list(powers_of_two(1)), [1])
+        g = powers_of_two(3)
+        self.assertEqual(g.next(), 1)
+        self.assertEqual(g.next(), 2)
+        self.assertRaises(StopIteration, g.next)
 
     def test_prefixes(self):
         self.assertEqual(list(prefixes('')), [''])
         self.assertEqual(list(prefixes('a')), ['', 'a'])
         self.assertEqual(list(prefixes('ab')), ['', 'a', 'ab'])
         self.assertEqual(list(prefixes('abc')), ['', 'a', 'ab', 'abc'])
+        g = prefixes('ab')
+        self.assertEqual(g.next(), '')
+        self.assertEqual(g.next(), 'a')
+        self.assertEqual(g.next(), 'ab')
+        self.assertRaises(StopIteration, g.next)
 
     def test_interleave(self):
         self.assertEqual(interleave([], []), [])
