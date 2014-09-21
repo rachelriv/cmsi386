@@ -2,9 +2,10 @@ from warmup import change, strip_quotes, scramble
 from warmup import powers_of_two, prefixes
 from warmup import interleave, stutter
 from subprocess import call, check_output, Popen, PIPE, STDOUT
-import uuid
 import re
 import unittest
+import tempfile
+import os
 
 class WarmupTestCase(unittest.TestCase):
 
@@ -71,28 +72,28 @@ class WarmupTestCase(unittest.TestCase):
         self.assertEqual(stutter([{'x': 0}, 1]), [{'x': 0}, {'x': 0}, 1, 1])
 
     def test_lines(self):
-        temporary_file_name = '/tmp/' + str(uuid.uuid4())
-        with open(temporary_file_name, 'w') as f:
-            f.write('\n')
-            f.write('    \n')
-            f.write('    one\n')
-            f.write('two\n')
-            f.write('       # comment\n')
-            f.write('hash char not the first non-blank       # comment\n')
-            f.write('# comment\n')
-        data = check_output(['python', 'lines.py', temporary_file_name])
-        call(['rm', temporary_file_name])
+        f = tempfile.NamedTemporaryFile(delete=False)
+        f.write('\n')
+        f.write('    \n')
+        f.write('    one\n')
+        f.write('two\n')
+        f.write('       # comment\n')
+        f.write('hash char not the first non-blank       # comment\n')
+        f.write('# comment\n')
+        f.close()
+        data = check_output(['python', 'lines.py', f.name])
+        os.remove(f.name)
         self.assertTrue(re.match(r'^\s*3\s*$', data))
 
     def test_wordcount(self):
         file_contents = 'QQQ A abc\na  a\tHA:qQq'
         pipe = Popen(['python', 'wordcount.py'], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
         data = pipe.communicate(input=file_contents)[0]
-        self.assertTrue(re.match(r'^a 3\nabc 1\nha 1\nqqq 2\n*$', data))
+        self.assertTrue(re.match(r'^a 3\r?\nabc 1\r?\nha 1\r?\nqqq 2(\r?\n)*$', data))
 
     def test_fifa(self):
         data = check_output(['python', 'fifa2014group.py', 'G'])
-        self.assertTrue(re.match(r'Name\s+W\s+D\s+L\nGermany\s+2\s+1\s+0\nUnited', data))
+        self.assertTrue(re.match(r'Name\s+W\s+D\s+L\r?\nGermany\s+2\s+1\s+0\r?\nUnited', data))
 
 
 if __name__ == '__main__':
