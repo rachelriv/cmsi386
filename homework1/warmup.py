@@ -54,6 +54,6 @@ def interleave(a, b):
     return [item for group in zip(a, b) for item in group] + a[len(b):] + b[len(a):]
 
 
-def stutter(l):
-    """Return a list containing the elements of list l doubled up."""
-    return interleave(l, l)
+def stutter(a):
+    """Return a list containing the elements of list a doubled up."""
+    return interleave(a, a)

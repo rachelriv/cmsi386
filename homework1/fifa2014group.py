@@ -5,44 +5,29 @@ import requests
 from operator import itemgetter
 
 
-def getAllTeams(group):
+def get_all_teams(group):
     """Get all teams within a specified fifa2014 group."""
     base_url = 'http://worldcup.kimonolabs.com/api/teams'
-    req_string = (base_url + '?apikey={key}&group={group}&fields={fields}'
-                  .format(group=group,
-                          key='KERbxAUfDYovbQnn9pR3pbLWEMRp47AQ',
-                          fields='name,wins,losses,draws,goalsDiff'))
-    r = requests.get(req_string)
+    url = (base_url + '?apikey={key}&group={group}&sort={sort}'
+           .format(group=group,
+                   key='KERbxAUfDYovbQnn9pR3pbLWEMRp47AQ',
+                   sort='groupRank'))
+    r = requests.get(url)
     return r.json()
 
 
-def displayTeams(teams):
+def display_teams(teams):
     """Display team information in a table."""
     # https://wiki.python.org/moin/HowTo/Sorting
-    sorted_teams = sorted(teams, cmp=comparator)
-    print 'Name             W  D  L'
-    for team in sorted_teams:
-        print '{name:<17}{wins}  {draws}  {losses}'.format(**team)
-
-
-def comparator(key1, key2):
-    """Comparator for the teams.
-
-    Sort in descending order for number of wins.
-    If tied, sort in descending order for number of draws.
-    If tied, sort in ascending order for goals difference.
-    """
-    if key1['wins'] != key2['wins']:
-        return -cmp(key1['wins'], key2['wins'])
-    elif key1['draws'] != key2['draws']:
-        return -cmp(key1['draws'], key2['draws'])
-    else:
-        return cmp(key1['goalsDiff'], key2['goalsDiff'])
+    print 'Name               W  D  L'
+    for team in teams:
+        print '{name:<19}{wins}  {draws}  {losses}'.format(**team)
 
 if __name__ == "__main__":
-    if len(sys.argv) == 1 or re.match('^[^A-H]$', sys.argv[1]):
+    if len(sys.argv) != 2 or sys.argv[1] not in list('ABCDEFGH'):
         print "Need just one commandline argument, A...H"
+        sys.exit(1)
     else:
         group = sys.argv[1]
-        teams = getAllTeams(group)
-        displayTeams(teams)
+        teams = get_all_teams(group)
+        display_teams(teams)

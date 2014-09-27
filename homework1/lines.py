@@ -7,7 +7,10 @@ File name must be passed as first argument.
 """
 
 import sys
+lines = 0
 with open(sys.argv[1]) as f:
-    print reduce(lambda x, y: x+1
-                 if y.strip() and not y.strip().startswith('#')
-                 else x, f, 0)
+    for line in f:
+        line = line.strip()
+        if line and not line.startswith('#'):
+            lines += 1
+    print lines
