@@ -2,18 +2,21 @@ exports.change = function(amount) {
     if (amount < 0) {
         throw new RangeError('amount cannot be negative');
     }
-    var changeArr = [],
-        quarterVal = 25,
-        dimeVal = 10,
-        nickelVal = 5;
-    value = amount;
-    changeArr.push(Math.floor(value / quarterVal));
-    value %= quarterVal;
-    changeArr.push(Math.floor(value / dimeVal));
-    value %= dimeVal;
-    changeArr.push(Math.floor(value / nickelVal));
-    changeArr.push(value % nickelVal);
-    return changeArr;
+    var QUARTER_VALUE = 25,
+        DIME_VALUE = 10,
+        NICKEL_VALUE = 5,
+        quarters,
+        dimes,
+        nickels,
+        pennies;
+
+    quarters = Math.floor(amount / QUARTER_VALUE);
+    amount %= QUARTER_VALUE;
+    dimes = Math.floor(amount / DIME_VALUE);
+    amount %= DIME_VALUE;
+    nickels = Math.floor(amount / NICKEL_VALUE);
+    pennies = amount % NICKEL_VALUE;
+    return [quarters, dimes, nickels, pennies]
 };
 
 exports.stripQuotes = function(str) {
