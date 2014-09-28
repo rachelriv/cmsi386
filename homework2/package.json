@@ -5,7 +5,10 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "chai": "*"
+    "chai": "*",
+    "sinon": "*",
+    "sinon-chai", "*",
+    "coffee-script": "*"
   },
   "scripts": {
     "test": "mocha"

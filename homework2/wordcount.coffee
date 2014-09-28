@@ -1,10 +1,15 @@
-if not process.argv[2]? or process.argv.length isnt 3 or not fs.existsSync process.argv[2]
-    console.log 'Please provide exactly 1 argument for a valid file'
-    process.exit 1
+# from http://nodejs.org/api/process.html#process_process_stdin
 
-fs.readFile process.argv[2], (err, data) =>
-    if err
-        console.log 'Unexpected error occured. Please try again'
-        process.exit 1
-    for line in data.split /\r?\n/g
-        # count words
+process.stdin.setEncoding 'utf8'
+
+input = ''
+process.stdin.on 'readable', ->
+    input += process.stdin.read()? or ''
+
+process.stdin.on 'end', ->
+    wordCounts = getWordCounts input
+    printSorted wordCounts
+
+getWordCounts = (str) ->
+   words = str.toLowerCase().split /[^a-z']+/
+   for word in words

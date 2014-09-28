@@ -1,5 +1,7 @@
 exports.change = function(amount) {
-    if (amount < 0) {
+    if (typeof amount !== 'number') {
+        throw new TypeError('amount must be a number');
+    } else if (amount < 0) {
         throw new RangeError('amount cannot be negative');
     }
     var QUARTER_VALUE = 25,
