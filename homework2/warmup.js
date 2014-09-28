@@ -16,7 +16,7 @@ exports.change = function(amount) {
     amount %= DIME_VALUE;
     nickels = Math.floor(amount / NICKEL_VALUE);
     pennies = amount % NICKEL_VALUE;
-    return [quarters, dimes, nickels, pennies]
+    return [quarters, dimes, nickels, pennies];
 };
 
 exports.stripQuotes = function(str) {
