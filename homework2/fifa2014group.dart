@@ -29,7 +29,5 @@ void main(List<String> args) {
         print(name + wld);
       }
     });
-  }).catchError(() {
-    
   });
 }
