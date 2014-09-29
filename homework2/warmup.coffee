@@ -1,12 +1,14 @@
+divmod = (x, y) ->
+  [x // y, x %% y]
+
 exports.change = (cents) ->
-  throw new TypeError 'amount must be a number' if (typeof cents isnt 'number')
+  throw new TypeError 'amount must be a number' if typeof cents isnt 'number'
   throw new RangeError 'amount cannot be negative' if cents < 0
   [QUARTER_VALUE, DIME_VALUE, NICKEL_VALUE] = [25, 10, 5]
-  divmod = (x, y) -> [x // y, x %% y]
   [quarters, cents] = divmod cents, QUARTER_VALUE
   [dimes, cents] = divmod cents, DIME_VALUE
-  [nickels, cents] = divmod cents, NICKEL_VALUE
-  [quarters, dimes, nickels, cents]
+  [nickels, pennies] = divmod cents, NICKEL_VALUE
+  [quarters, dimes, nickels, pennies]
 
 exports.stripQuotes = (str) ->
   str.replace /['"]/g, ''
@@ -14,7 +16,7 @@ exports.stripQuotes = (str) ->
 exports.scramble = (start) ->
   shuffle = start.split ''
   for char, index in shuffle
-    j = Math.floor Math.random * i
+    j = Math.floor (Math.random() * index)
     [shuffle[index], shuffle[j]] = [shuffle[j], shuffle[index]]
   shuffle.join ''
 
