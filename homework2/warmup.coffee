@@ -24,17 +24,17 @@ exports.powersOfTwo = (limit, callback) ->
   callback i for i in [1..limit] by i unless limit < 0
 
 exports.prefixes = (string, callback) ->
-  i = 0
-  callback string[0..i++] for char in string
+  callback string.substring(0,i) for i in [0..string.length]
 
 exports.interleave = (a, b) ->
   result = []
   for index in [0..Math.max a.length, b.length]
     if a[index]
-      result.append a[index]
+      result.push a[index]
     if b[index]
-      result.append b[index]
+      result.push b[index]
   result
 
-exports.stutter = (a) => @interleave a, b
+exports.stutter = (a) =>
+  @interleave a, a
 # vim: ts=2:sw=2
