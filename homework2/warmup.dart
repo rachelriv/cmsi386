@@ -2,6 +2,7 @@ library warmup;
 
 import 'dart:collection';
 import 'dart:math';
+import 'dart:convert';
 
 List<num> change(num amount) {
   if (amount < 0) {
@@ -59,19 +60,21 @@ Iterable<int> powersOfTwo(int limit) {
 }
 
 Iterable<String> prefixes(String toPrefix) =>
-    new Iterable.generate(toPrefix.length, (index) => toPrefix.substring(0, index));
+    new Iterable.generate(toPrefix.length + 1, (index) => toPrefix.substring(0, index));
 
 List interleave(List listA, List listB) {
   var maxLength = max(listA.length, listB.length);
   var returnList = [];
   for (var i = 0; i < maxLength; i++) {
-    if (listA.length < maxLength) {
+    if (i < listA.length) {
       returnList.add(listA[i]);
     }
-    if (listB.length < maxLength) {
+    if (i < listB.length) {
       returnList.add(listB[i]);
     }
   }
+
+  return returnList;
 }
 
 List stutter(List toStutter) => interleave(toStutter, toStutter);

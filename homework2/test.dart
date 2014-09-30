@@ -1,5 +1,7 @@
 import 'package:unittest/unittest.dart';
 import 'warmup.dart';
+import 'dart:io';
+import 'dart:convert';
 
 void main() {
   group('change', () {
@@ -89,6 +91,83 @@ void main() {
   });
 
   group('interleave', () {
-    test()
-  })
+    test('works for all possible length relationships', () {
+      expect(interleave([], []), equals([]));
+      expect(interleave([1], []), equals([1]));
+      expect(interleave([], [1]), equals([1]));
+      expect(interleave([1], [1]), equals([1, 1]));
+      expect(interleave([null], [null]), equals([null, null]));
+      expect(interleave([null, null], [0]), equals([null, 0, null]));
+      expect(interleave([0], [null, null]), equals([0, null, null]));
+      expect(interleave([1], ['a', 'b', 'c', 'd']), equals([1, 'a', 'b', 'c', 'd']));
+      expect(interleave(['a', 'b', 'c', 'd'], [1]), equals(['a', 1, 'b', 'c', 'd']));
+    });
+  });
+
+  group('stutter', () {
+    test('works', () {
+      expect(stutter([]), equals([]));
+      expect(stutter([true]), equals([true, true]));
+      expect(stutter([null]), equals([null, null]));
+      expect(stutter([2, 'x', 5.5]), equals([2, 2, 'x', 'x', 5.5, 5.5 ]));
+      expect(stutter([2, [3]]), equals([2, 2, [3], [3]]));
+      expect(stutter([[[[[[null]]]]]]), equals([[[[[[null]]]]], [[[[[null]]]]]]));
+      expect(stutter([{'x': 0}, 1]), equals([{'x': 0}, {'x': 0}, 1, 1]));
+    });
+  });
+
+  group('lines', () {
+    // Dart handles closing the file handles internally if there's an exception.
+    File tempFile;
+    setUp(() {
+      var fileContents = '''
+      // A file
+      one
+
+          two
+            // yep, commented
+      //////
+
+      three
+        F O U R
+      ''';
+      var tempDir = Directory.systemTemp;
+      return new File('${tempDir.path}/lines.txt').writeAsString(fileContents)
+      .then((file) {
+        tempFile = file;
+      });
+    });
+
+    tearDown(() {
+      return tempFile.delete();
+    });
+
+    test('reads from a file and reports correct line count', () {
+      return Process.run('dart', ['lines.dart', tempFile.path]).then((ProcessResult results) {
+        print(results.stderr);
+        expect(results.stdout, matches(r'4\r?\n'));
+      });
+    });
+
+    group('wordcount', () {
+      var story;
+      setUp() {
+        story = '''Long, long agø they'd found
+          an int -- and a long.
+        And a string!''';
+      }
+
+      test('reads from stdin and reports correct word count', () {
+        return Process.start('dart', ['wordcount.dart']).then((Process process) {
+          process.stdin.write(story);
+          print(process.stderr);
+          var matchPattern = r"^a 2\r?\nag 1\r?\nan 1\r?\nand 2\r?\nfound 1\r?\nint 1\r?\nlong 3\r?\nstring 1\r?\nthey'd 1$";
+          UTF8.decodeStream(stdout).then((String story) {
+            expect(story, matches(new RegExp(matchPattern)));
+          });
+        });
+      });
+    });
+  });
+
 }
