@@ -43,10 +43,9 @@ exports.powersOfTwo = function(limit, callback) {
     }
 };
 
-exports.prefixes = function(str, callback) {
-    var strArr = str.split('');
-    for (var i = 0; i <= strArr.length; i++) {
-        callback(strArr.slice(0, i).join(''));
+exports.prefixes = function(str, callback) {;
+    for (var i = 0; i <= str.length; i++) {
+        callback(str.substring(0, i));
     }
 };
 

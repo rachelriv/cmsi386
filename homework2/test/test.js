@@ -1,72 +1,256 @@
-var should = require('chai').should();
-// TODO: Add 'it' methods to describe things better
-describe('warmup.js', function() {
-    var warmup = require('../warmup.js');
-    describe('change', function() {
-        it('should return American change for a given cent amount, or throw a range error if negative', function() {
-            warmup.change(96).should.eql([3, 2, 0, 1]);
-            warmup.change(8).should.eql([0, 0, 1, 3]);
-            (function() {
-                warmup.change(-9);
-            }).should.throw(RangeError, 'amount cannot be negative');
-            warmup.change(33.25).should.eql([1, 0, 1, 3.25]);
-        });
+var chai      = require('chai'),
+    expect    = chai.expect
+    sinon     = require('sinon'),
+    sinonChai = require('sinon-chai'),
+    warmup    = require('../warmup.js');
+
+chai.use(sinonChai);
+
+describe('warmup', function() {
+  describe('#change', function() {
+    context('when a positive integer amount is given', function() {
+      return it('returns an array with integer coin values', function() {
+        expect(warmup.change(97)).to.eql([3, 2, 0, 2]);
+        expect(warmup.change(8)).to.eql([0, 0, 1, 3]);
+        return expect(warmup.change(250)).to.eql([10, 0, 0, 0]);
+      });
     });
-
-    describe('stripQuotes', function() {
-        it('should remove all quotes from a string', function() {
-            warmup.stripQuotes("a\"\"\'\"\"\"\"z").should.equal('az');
-        });
+    context('when 0 is given as the amount', function() {
+      return it('returns an array with all zeros', function() {
+        return expect(warmup.change(0)).to.eql([0, 0, 0, 0]);
+      });
     });
-
-    describe('scramble', function() {
-        it('should scramble the word', function() {
-            warmup.scramble('Hello, World!').split('').sort().should.eql('Hello, World!'.split('').sort());
-        });
+    context('when a large number is given as the amount', function() {
+      return it('returns an array with integer coin values', function() {
+        return expect(warmup.change(2500000000001)).to.eql([100000000000, 0, 0, 1]);
+      });
     });
-
-    describe('powersOfTwo', function() {
-        it('should call a callback for all powers of two less than a given number asynchrnously', function() {
-            var po2Arr = [];
-            warmup.powersOfTwo(70, function(p) {
-                po2Arr.push(p);
-            });
-            po2Arr.should.eql([1, 2, 4, 8, 16, 32, 64]);
-        });
+    context('when a float is given as the amount', function() {
+      return it('returns an array with floats', function() {
+        return expect(warmup.change(33.25)).to.eql([1.0, 0.0, 1.0, 3.25]);
+      });
     });
-
-    describe('prefixes', function() {
-        it('should call a callback for all successive prefixes of a string', function() {
-            var preArr = [];
-            warmup.prefixes('brendan', function(p) {
-                preArr.push(p);
-            });
-            preArr.should.eql(['', 'b', 'br', 'bre', 'bren', 'brend', 'brenda', 'brendan']);
-        });
+    context('when a negative amount is given', function() {
+      return it('throws a range error', function() {
+        var changeWithNegative;
+        changeWithNegative = function() {
+          return warmup.change(-4);
+        };
+        return expect(changeWithNegative).to["throw"](RangeError);
+      });
     });
-
-    describe('interleave', function() {
-        it('should interleave two arrays', function() {
-            warmup.interleave(['a', 'b'], [1, 2, true, null]).should.eql(["a", 1, "b", 2, true, null]);
-            warmup.interleave([7, 3, 'dog'], [false]).should.eql([7, false, 3, 'dog']);
-        });
+    return context('when a non-number is given as the amount', function() {
+      return it('raises a TypeError', function() {
+        var changeWithAbc;
+        changeWithAbc = function() {
+          return warmup.change('abc');
+        };
+        return expect(changeWithAbc).to["throw"](TypeError);
+      });
     });
-
-    describe('stutter', function() {
-        it('should double every element in the array', function() {
-            warmup.stutter([5, 'dog', [3], 9]).should.eql([5, 5, 'dog', 'dog', [3], [3], 9, 9]);
-        });
+  });
+  return describe('#stripQuotes', function() {
+    context('when an empty string is provided', function() {
+      return it('returns an empty string', function() {
+        return expect(warmup.stripQuotes('')).to.equal('');
+      });
     });
-});
-
-describe('lines.js', function() {
-    var lines = require('../lines.js');
-});
-
-describe('wordcount.js', function() {
-    var wordcount = require('../wordcount.js');
-});
-
-describe('fifa2014group.js', function() {
-    var fifa = require('../fifa2014group.js');
+    context('when a string without quotes is provided', function() {
+      return it('returns a string identical to the original string', function() {
+        var originalString;
+        originalString = 'Hello, world';
+        return expect(warmup.stripQuotes(originalString)).to.equal(originalString);
+      });
+    });
+    context('when a string with all quotes is provided', function() {
+      return it('returns an empty string', function() {
+        return expect(warmup.stripQuotes("\'\"\'")).to.equal('');
+      });
+    });
+    context('when a string with quotes and other characters is provided', function() {
+      return it('returns a string with non-quote characters', function() {
+        return expect(warmup.stripQuotes('a\"\"\'\"\"\"z')).to.equal('az');
+      });
+    });
+    describe('#scramble', function() {
+      return context('when a non-empty string is provided', function() {
+        return it('returns a scrambled string, preserving all characters', function() {
+          var originalString, scrambledString, sortedOriginalLetters, sortedScrambledLetters;
+          originalString = 'Hello, world';
+          sortedOriginalLetters = originalString.split('').sort();
+          scrambledString = warmup.scramble(originalString);
+          sortedScrambledLetters = scrambledString.split('').sort();
+          return expect(sortedScrambledLetters).to.eql(sortedOriginalLetters);
+        });
+      });
+    });
+    describe('#powersOfTwo', function() {
+      context('when a positive number is given', function() {
+        return it('yields powers of two, consuming values with a callback', function() {
+          var callbackFor60, callbackFor63, callbackFor64, callbackFor70;
+          callbackFor70 = sinon.spy();
+          warmup.powersOfTwo(70, callbackFor70);
+          expect(callbackFor70).to.have.callCount(7);
+          expect(callbackFor70.args[0][0]).to.equal(1);
+          expect(callbackFor70.args[1][0]).to.equal(2);
+          expect(callbackFor70.args[2][0]).to.equal(4);
+          expect(callbackFor70.args[3][0]).to.equal(8);
+          expect(callbackFor70.args[4][0]).to.equal(16);
+          expect(callbackFor70.args[5][0]).to.equal(32);
+          expect(callbackFor70.args[6][0]).to.equal(64);
+          callbackFor60 = sinon.spy();
+          warmup.powersOfTwo(60, callbackFor60);
+          expect(callbackFor60).to.have.callCount(6);
+          expect(callbackFor60.args[0][0]).to.equal(1);
+          expect(callbackFor60.args[1][0]).to.equal(2);
+          expect(callbackFor60.args[2][0]).to.equal(4);
+          expect(callbackFor60.args[3][0]).to.equal(8);
+          expect(callbackFor60.args[4][0]).to.equal(16);
+          expect(callbackFor60.args[5][0]).to.equal(32);
+          callbackFor63 = sinon.spy();
+          warmup.powersOfTwo(63, callbackFor63);
+          expect(callbackFor63).to.have.callCount(6);
+          expect(callbackFor63.args[0][0]).to.equal(1);
+          expect(callbackFor63.args[1][0]).to.equal(2);
+          expect(callbackFor63.args[2][0]).to.equal(4);
+          expect(callbackFor63.args[3][0]).to.equal(8);
+          expect(callbackFor63.args[4][0]).to.equal(16);
+          expect(callbackFor63.args[5][0]).to.equal(32);
+          callbackFor64 = sinon.spy();
+          warmup.powersOfTwo(64, callbackFor64);
+          expect(callbackFor64).to.have.callCount(7);
+          expect(callbackFor64.args[0][0]).to.equal(1);
+          expect(callbackFor64.args[1][0]).to.equal(2);
+          expect(callbackFor64.args[2][0]).to.equal(4);
+          expect(callbackFor64.args[3][0]).to.equal(8);
+          expect(callbackFor64.args[4][0]).to.equal(16);
+          expect(callbackFor64.args[5][0]).to.equal(32);
+          return expect(callbackFor64.args[6][0]).to.equal(64);
+        });
+      });
+      context('when one is given', function() {
+        return it('consumes only the value one in the callback', function() {
+          var callbackForOne;
+          callbackForOne = sinon.spy();
+          warmup.powersOfTwo(1, callbackForOne);
+          expect(callbackForOne).to.have.been.called.once;
+          return expect(callbackForOne.args[0][0]).to.equal(1);
+        });
+      });
+      context('when zero is given', function() {
+        return it('does not consume any values in a callback', function() {
+          var callbackForZero;
+          callbackForZero = sinon.spy();
+          warmup.powersOfTwo(0, callbackForZero);
+          return expect(callbackForZero).to.not.have.been.called;
+        });
+      });
+      return context('when a negative number is given', function() {
+        return it('does not consume any values in a callback', function() {
+          var callbackForNegative;
+          callbackForNegative = sinon.spy();
+          warmup.powersOfTwo(-10, callbackForNegative);
+          return expect(callbackForNegative).to.not.have.been.called;
+        });
+      });
+    });
+    describe('#prefixes', function() {
+      context('when an empty string is given', function() {
+        return it('calls the callback with the empty string', function() {
+          var callbackForEmptyString;
+          callbackForEmptyString = sinon.spy();
+          warmup.prefixes('', callbackForEmptyString);
+          expect(callbackForEmptyString).to.have.been.called.once;
+          return expect(callbackForEmptyString.args[0][0]).to.equal('');
+        });
+      });
+      context('when a string of length one is given', function() {
+        return it('calls the callback with the empty string and the character', function() {
+          var callbackForOneChar;
+          callbackForOneChar = sinon.spy();
+          warmup.prefixes('a', callbackForOneChar);
+          expect(callbackForOneChar).to.have.been.called.twice;
+          expect(callbackForOneChar.args[0][0]).to.equal('');
+          return expect(callbackForOneChar.args[1][0]).to.equal('a');
+        });
+      });
+      return context('when a typical string is given', function() {
+        return it('yields successive prefixes, starting with the first zero-character prefix', function() {
+          var callback;
+          callback = sinon.spy();
+          warmup.prefixes('brendan eich', callback);
+          expect(callback).to.have.callCount(13);
+          expect(callback.args[0][0]).to.equal('');
+          expect(callback.args[1][0]).to.equal('b');
+          expect(callback.args[2][0]).to.equal('br');
+          expect(callback.args[3][0]).to.equal('bre');
+          expect(callback.args[4][0]).to.equal('bren');
+          expect(callback.args[5][0]).to.equal('brend');
+          expect(callback.args[6][0]).to.equal('brenda');
+          expect(callback.args[7][0]).to.equal('brendan');
+          expect(callback.args[8][0]).to.equal('brendan ');
+          expect(callback.args[9][0]).to.equal('brendan e');
+          expect(callback.args[10][0]).to.equal('brendan ei');
+          expect(callback.args[11][0]).to.equal('brendan eic');
+          return expect(callback.args[12][0]).to.equal('brendan eich');
+        });
+      });
+    });
+    describe('#interleave', function() {
+      context('when two empty arrays are given', function() {
+        return it('returns an empty array', function() {
+          return expect(warmup.interleave([], [])).to.eql([]);
+        });
+      });
+      context('when a non-empty array is interleaved with an empty array', function() {
+        return it('returns an array that is identical to the original non-empty array', function() {
+          var a, b;
+          a = [];
+          b = [1];
+          return expect(warmup.interleave(a, b)).to.eql(b);
+        });
+      });
+      context('when null/undefined values are in the array', function() {
+        return it('preserves the null/undefined values in the interleaving', function() {
+          var a, b;
+          a = [null, 1, 2];
+          b = ['a', 'b', void 0];
+          return expect(warmup.interleave(a, b)).to.eql([null, 'a', 1, 'b', 2, void 0]);
+        });
+      });
+      return context('when an typical array is given', function() {
+        return it('interleaves the two arrays', function() {
+          var a, b;
+          a = [1];
+          b = ['a', 'b', 'c', 'd'];
+          expect(warmup.interleave(a, b)).to.eql([1, 'a', 'b', 'c', 'd']);
+          a = ['a', 'b', 'c', 'd'];
+          b = [1];
+          return expect(warmup.interleave(a, b)).to.eql(['a', 1, 'b', 'c', 'd']);
+        });
+      });
+    });
+    return describe('#stutter', function() {
+      context('when two empty arrays are given', function() {
+        return it('returns an empty array', function() {
+          return expect(warmup.stutter([])).to.eql([]);
+        });
+      });
+      return context('when hashes are given within the array', function() {
+        return it('stutters the array with the hashes unchanged', function() {
+          return expect(warmup.stutter([
+            {
+              x: 0
+            }, 1
+          ])).to.eql([
+            {
+              x: 0
+            }, {
+              x: 0
+            }, 1, 1
+          ]);
+        });
+      });
+    });
+  });
 });
