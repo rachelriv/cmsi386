@@ -162,7 +162,7 @@ void main() {
           process.stdin.write(story);
           print(process.stderr);
           var matchPattern = r"^a 2\r?\nag 1\r?\nan 1\r?\nand 2\r?\nfound 1\r?\nint 1\r?\nlong 3\r?\nstring 1\r?\nthey'd 1$";
-          UTF8.decodeStream(stdout).then((String story) {
+          UTF8.decodeStream(process.stdout).then((String story) {
             expect(story, matches(new RegExp(matchPattern)));
           });
         });
