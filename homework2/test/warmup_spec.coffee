@@ -203,11 +203,11 @@ describe '#stripQuotes', ->
         expect(warmup.interleave a, b).to.eql b
 
     context 'when null/undefined values are in the array', ->
-      it 'does NOT interleave the null/undefined values', ->
+      it 'preserves the null/undefined values in the interleaving', ->
         a = [null, 1, 2]
         b = ['a', 'b', undefined]
         expect(warmup.interleave a, b)
-          .to.eql ['a', 1, 'b', 2]
+          .to.eql [null, 'a', 1, 'b', 2, undefined]
 
     context 'when an typical array is given', ->
       it 'interleaves the two arrays', ->

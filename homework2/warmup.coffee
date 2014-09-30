@@ -29,9 +29,9 @@ exports.prefixes = (string, callback) ->
 exports.interleave = (a, b) ->
   result = []
   for index in [0..Math.max a.length, b.length]
-    if a[index]
+    if index < a.length
       result.push a[index]
-    if b[index]
+    if index < b.length
       result.push b[index]
   result
 
