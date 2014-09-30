@@ -1,8 +1,14 @@
 # from http://nodejs.org/api/process.html#process_process_stdin
+fs = require 'fs'
 
-process.stdin.setEncoding 'utf8'
+if process.argv.length isnt 3 or not fs.existsSync process.argv[2]
+  console.log 'Please provide exactly one argument containing a valid text file'
+  process.exit 1
 
-process.stdin.on 'readable', () =>
-  chunk = process.stdin.read()
-  for line in chunk.split /\r?\n/g
-
+fs.readFile process.argv[2], {encoding: 'UTF-8'},  (err, res) ->
+  throw err if err
+  lineCount = 0
+  res.split(/\r?\n/g).forEach (line) ->
+    lineTrim = line.trim()
+    lineCount++ if lineTrim.length > 0 and not lineTrim.match(/^\/\//)
+  console.log lineCount

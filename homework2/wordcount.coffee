@@ -5,7 +5,6 @@ process.stdin.setEncoding 'utf8'
 input = ''
 process.stdin.on 'readable', ->
   input += process.stdin.read() ? ''
-  console.log input
 
 process.stdin.on 'end', ->
   printSorted input
@@ -18,7 +17,7 @@ printSorted = (str) ->
   wordCount = 0
   for word in words
     if word isnt currentWord
-      console.log currentWord + ' ' + wordCount
+      console.log "#{currentWord} #{wordCount}"
       currentWord = word
       wordCount = 0
     wordCount++
