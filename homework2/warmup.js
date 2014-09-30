@@ -27,14 +27,14 @@ exports.stripQuotes = function(str) {
 
 exports.scramble = function(start) {
     // Fisher Yates shuffle from http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
-    var shuffleArr = start.split('');
+    var result = start.split('');
     for (var i = 0; i < start.length; i++) {
         var j = Math.floor(Math.random() * i);
-        var shuffleI = shuffleArr[i];
-        shuffleArr[i] = shuffleArr[j];
-        shuffleArr[j] = shuffleI;
+        var save = result[i];
+        result[i] = result[j];
+        result[j] = save;
     }
-    return shuffleArr.join('');
+    return result.join('');
 };
 
 exports.powersOfTwo = function(limit, callback) {
@@ -54,16 +54,16 @@ exports.interleave = function(a, b) {
     var aLen = a.length,
         bLen = b.length,
         maxLen = Math.max(aLen, bLen),
-        returnArr = [];
+        result = [];
     for (var i = 0; i < maxLen; i++) {
         if (i < aLen) {
-            returnArr.push(a[i]);
+            result.push(a[i]);
         }
         if (i < bLen) {
-            returnArr.push(b[i]);
+            result.push(b[i]);
         }
     }
-    return returnArr;
+    return result;
 };
 
 exports.stutter = function(arr) {
