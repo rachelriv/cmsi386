@@ -87,15 +87,14 @@ class WarmupTestCase(unittest.TestCase):
         self.assertEqual(stutter([{'x': 0}, 1]), [{'x': 0}, {'x': 0}, 1, 1])
 
     def test_lines_works_for_pretty_good_test_case(self):
-        f = tempfile.NamedTemporaryFile(delete=False)
-        f.write('\n')
-        f.write('    \n')
-        f.write('    one\n')
-        f.write('two\n')
-        f.write('       # comment\n')
-        f.write('hash char not the first non-blank       # comment\n')
-        f.write('# comment\n')
-        f.close()
+        with tempfile.NamedTemporaryFile(delete=False) as f:
+            f.write('\n')
+            f.write('    \n')
+            f.write('    one\n')
+            f.write('two\n')
+            f.write('       # comment\n')
+            f.write('hash char not the first non-blank       # comment\n')
+            f.write('# comment\n')
         data = check_output(['python', 'lines.py', f.name])
         os.remove(f.name)
         self.assertTrue(re.match(r'^\s*3\s*$', data))
@@ -104,11 +103,20 @@ class WarmupTestCase(unittest.TestCase):
         file_contents = 'QQQ A abc\na  a\tHA:qQq'
         pipe = Popen(['python', 'wordcount.py'], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
         data = pipe.communicate(input=file_contents)[0]
-        self.assertTrue(re.match(r'^a 3\r?\nabc 1\r?\nha 1\r?\nqqq 2(\r?\n)*$', data))
+        lines = data.splitlines()
+        self.assertTrue(re.match(r'^a 3$', lines[0]))
+        self.assertTrue(re.match(r'^abc 1$', lines[1]))
+        self.assertTrue(re.match(r'^ha 1$', lines[2]))
+        self.assertTrue(re.match(r'^qqq 2$', lines[3]))
 
     def test_fifa_works_for_group_G(self):
         data = check_output(['python', 'fifa2014group.py', 'G'])
-        self.assertTrue(re.match(r'Name\s+W\s+D\s+L\r?\nGermany\s+2\s+1\s+0\r?\nUnited', data))
+        lines = data.splitlines()
+        self.assertTrue(re.match(r'Name\s+W\s+D\s+L\s*$', lines[0]))
+        self.assertTrue(re.match(r'Germany\s+2\s+1\s+0\s*$', lines[1]))
+        self.assertTrue(re.match(r'United States\s+1\s+1\s+1\s*$', lines[2]))
+        self.assertTrue(re.match(r'Portugal\s+1\s+1\s+1\s*$', lines[3]))
+        self.assertTrue(re.match(r'Ghana\s+0\s+1\s+2\s*$', lines[4]))
 
     def test_fifa_behaves_properly_for_invalid_input(self):
         #
