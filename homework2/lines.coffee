@@ -3,6 +3,6 @@
 process.stdin.setEncoding 'utf8'
 
 process.stdin.on 'readable', () =>
-    chunk = process.stdin.read()
-    for line in chunk.split /\r?\n/g
-        # count lines
+  chunk = process.stdin.read()
+  for line in chunk.split /\r?\n/g
+

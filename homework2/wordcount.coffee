@@ -4,12 +4,23 @@ process.stdin.setEncoding 'utf8'
 
 input = ''
 process.stdin.on 'readable', ->
-    input += process.stdin.read()? or ''
+  input += process.stdin.read() ? ''
+  console.log input
 
 process.stdin.on 'end', ->
-    wordCounts = getWordCounts input
-    printSorted wordCounts
+  printSorted input
 
-getWordCounts = (str) ->
-   words = str.toLowerCase().split /[^a-z']+/
-   for word in words
+printSorted = (str) ->
+  words = str.toLowerCase().split /[^a-z']+/
+  words.sort()
+  words = words.filter (word) -> word.trim().length > 0
+  currentWord = words[0]
+  wordCount = 0
+  for word in words
+    if word isnt currentWord
+      console.log currentWord + ' ' + wordCount
+      currentWord = word
+      wordCount = 0
+    wordCount++
+
+
