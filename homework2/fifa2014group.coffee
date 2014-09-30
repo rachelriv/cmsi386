@@ -19,6 +19,7 @@ req = http.request reqOptions, (res) ->
     teams = JSON.parse data
     teams.forEach (team) ->
       pad = 19 - team.name.length
+      pad = 0 if pad < 0
       console.log "#{team.name}#{Array(pad).join(' ')} #{team.wins}  #{team.draws}  #{team.losses}"
 
 req.end()
