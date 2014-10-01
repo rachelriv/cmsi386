@@ -7,12 +7,12 @@ process.stdin.on 'readable', ->
   input += process.stdin.read() ? ''
 
 process.stdin.on 'end', ->
-  printSorted input
+  printWordCount input
 
-printSorted = (str) ->
+printWordCount = (str) ->
   words = str.toLowerCase().split /[^a-z']+/
   words.sort()
-  words = words.filter (word) -> word.trim().length > 0
+  words = words.filter (word) -> word.trim()
   currentWord = words[0]
   wordCount = 0
   for word in words

@@ -1,13 +1,13 @@
-divmod = (x, y) ->
-  [x // y, x %% y]
-
 exports.change = (cents) ->
   throw new TypeError 'amount must be a number' if typeof cents isnt 'number'
   throw new RangeError 'amount cannot be negative' if cents < 0
   [QUARTER_VALUE, DIME_VALUE, NICKEL_VALUE] = [25, 10, 5]
-  [quarters, cents] = divmod cents, QUARTER_VALUE
-  [dimes, cents] = divmod cents, DIME_VALUE
-  [nickels, pennies] = divmod cents, NICKEL_VALUE
+  quarters = Math.floor (cents / QUARTER_VALUE)
+  cents %= QUARTER_VALUE
+  dimes = Math.floor (cents / DIME_VALUE)
+  cents %= DIME_VALUE
+  nickels = Math.floor (cents / NICKEL_VALUE)
+  pennies = cents % NICKEL_VALUE
   [quarters, dimes, nickels, pennies]
 
 exports.stripQuotes = (str) ->
@@ -23,8 +23,8 @@ exports.scramble = (start) ->
 exports.powersOfTwo = (limit, callback) ->
   callback i for i in [1..limit] by i unless limit < 0
 
-exports.prefixes = (string, callback) ->
-  callback string.substring(0,i) for i in [0..string.length]
+exports.prefixes = (str, callback) ->
+  callback str.substring(0,i) for i in [0..str.length]
 
 exports.interleave = (a, b) ->
   result = []

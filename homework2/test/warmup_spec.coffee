@@ -58,6 +58,22 @@ describe 'warmup', ->
       it 'returns a string with non-quote characters', ->
         expect(warmup.stripQuotes 'a\"\"\'\"\"\"z').to.equal 'az'
 
+    context 'when the argument provided is not a string', ->
+      it 'throws a TypeError', ->
+        stripQuotesWithNum = -> warmup.stripQuotes 7
+        expect(stripQuotesWithNum).to.throw TypeError
+
+        stripQuotesWithArray = -> warmup.stripQuotes []
+        expect(stripQuotesWithArray).to.throw TypeError
+
+        stripQuotesWithObj = -> warmup.stripQuotes {}
+        expect(stripQuotesWithObj).to.throw TypeError
+
+        stripQuotesWithUndefined = -> warmup.stripQuotes undefined
+        expect(stripQuotesWithUndefined).to.throw TypeError
+
+        stripQuotesWithNull = -> warmup.stripQuotes null
+        expect(stripQuotesWithNull).to.throw TypeError
 
     describe '#scramble', ->
 
