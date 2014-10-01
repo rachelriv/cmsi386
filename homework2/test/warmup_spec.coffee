@@ -137,17 +137,11 @@ describe 'warmup', ->
           expect(callbackForOne).to.have.been.called.once
           expect(callbackForOne.args[0][0]).to.equal 1
 
-      context 'when zero is given', ->
-        it 'does not consume any values in a callback', ->
+      context 'when the given number is less then one', ->
+        it 'does not call the callback', ->
           callbackForZero = sinon.spy()
           warmup.powersOfTwo 0, callbackForZero
           expect(callbackForZero).to.not.have.been.called
-
-      context 'when a negative number is given', ->
-        it 'does not consume any values in a callback', ->
-          callbackForNegative = sinon.spy()
-          warmup.powersOfTwo -10, callbackForNegative
-          expect(callbackForNegative).to.not.have.been.called
 
 
     describe '#prefixes', ->

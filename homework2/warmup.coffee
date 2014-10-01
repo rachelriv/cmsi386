@@ -37,4 +37,3 @@ exports.interleave = (a, b) ->
 
 exports.stutter = (a) =>
   @interleave a, a
-# vim: ts=2:sw=2

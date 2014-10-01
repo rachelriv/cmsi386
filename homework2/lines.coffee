@@ -10,5 +10,5 @@ fs.readFile process.argv[2], {encoding: 'UTF-8'},  (err, res) ->
   lineCount = 0
   res.split(/\r?\n/g).forEach (line) ->
     trimmedLine = line.trim()
-    lineCount++ if trimmedLine and not trimmedLine.match /^#/
+    lineCount++ if trimmedLine and trimmedLine.indexOf('#') isnt 0
   console.log lineCount
