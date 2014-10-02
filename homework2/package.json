@@ -5,10 +5,13 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "chai": "*"
+    "chai": "*",
+    "sinon": "*",
+    "sinon-chai": "*",
+    "coffee-script": "*"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --compilers coffee:coffee-script/register ./test/warmup_spec.coffee"
   },
   "repository": {
     "type": "git",
