@@ -24,8 +24,8 @@ printFormatted = (teams) ->
   console.log "#{rightPad 'Team', defaultPadding}W  D  L"
   teams.forEach (team) ->
     paddingAmount = Math.max team.name.length, defaultPadding
-    console.log """#{rightPad team.name, paddingAmount}\
-                   #{team.wins}  #{team.draws}  #{team.losses}"""
+    console.log "#{rightPad team.name, paddingAmount}\
+                 #{team.wins}  #{team.draws}  #{team.losses}"
 
 
 unless areValidArgs process.argv

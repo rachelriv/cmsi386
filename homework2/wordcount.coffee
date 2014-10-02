@@ -7,22 +7,21 @@ process.stdin.on 'readable', ->
   input += process.stdin.read() ? ''
 
 process.stdin.on 'end', ->
-  printWordCount input
+  wordCount = getWordCounts input
+  printSorted wordCount
 
-getWords: (str) ->
-  words = str.toLowerCase().split /[^a-z']+/
-  words.sort()
-  words = words.filter (word) -> word.trim()
+getWordCounts = (s) ->
+  words = s.toLowerCase().split(/[^a-z\']+/)
+  result = {}
+  words.forEach (w) ->
+    result[w] = (if w of result then result[w] + 1 else 1)
+    return
 
-printWordCount = (str) ->
-  words = @getWords str
-  currentWord = words[0]
-  wordCount = 0
-  for word in words
-    if word isnt currentWord
-      console.log "#{currentWord} #{wordCount}"
-      currentWord = word
-      wordCount = 0
-    wordCount++
+  result
 
+printSorted = (wordCounts) ->
+  Object.keys(wordCounts).sort().forEach (v, i) ->
+    console.log v, wordCounts[v]
 
+# export these methods for testing purposes
+# module.exports = {getWords, printWordCount}
