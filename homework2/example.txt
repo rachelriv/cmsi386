@@ -1,9 +1,0 @@
-# A file
-one
-
-    two
-      # yep, commented
-###
-
-three
-  F O U R
