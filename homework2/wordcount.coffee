@@ -1,5 +1,4 @@
 # from http://nodejs.org/api/process.html#process_process_stdin
-console.log new Date().getTime()
 process.stdin.setEncoding 'utf8'
 
 input = ''
@@ -9,7 +8,6 @@ process.stdin.on 'readable', ->
 process.stdin.on 'end', ->
   wordCount = getWordCounts input
   printSorted wordCount
-  console.log new Date().getTime()
 
 getWordCounts = (string) ->
   words = string.toLowerCase().split(/[^a-z']+/)
