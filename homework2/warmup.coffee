@@ -35,5 +35,5 @@ exports.interleave = (a, b) ->
       result.push b[index]
   result
 
-exports.stutter = (a) =>
+exports.stutter = (a) ->
   @interleave a, a
