@@ -231,6 +231,13 @@ describe 'warmup', ->
           expect(warmup.interleave a, b)
             .to.eql ['a', 1, 'b', 'c', 'd']
 
+      context 'when nested arrays are given', ->
+        it 'treats nested arrays as single items to be interleaved', ->
+          a = [[[['a']]], 'b']
+          b = [[[1, 2, 3], [4, 5, 6]], 7 ]
+          expect(warmup.interleave a, b)
+            .to.eql [[[['a']]], [[1,2,3], [4,5,6]], 'b', 7]
+
     describe '#stutter', ->
 
       context 'when two empty arrays are given', ->

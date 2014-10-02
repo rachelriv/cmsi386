@@ -9,10 +9,13 @@ process.stdin.on 'readable', ->
 process.stdin.on 'end', ->
   printWordCount input
 
-printWordCount = (str) ->
+getWords: (str) ->
   words = str.toLowerCase().split /[^a-z']+/
   words.sort()
   words = words.filter (word) -> word.trim()
+
+printWordCount = (str) ->
+  words = @getWords str
   currentWord = words[0]
   wordCount = 0
   for word in words

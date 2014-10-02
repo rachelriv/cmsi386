@@ -8,7 +8,9 @@
     "chai": "*",
     "sinon": "*",
     "sinon-chai": "*",
-    "coffee-script": "*"
+    "coffee-script": "*",
+    "child-process": "*",
+    "request": "*"
   },
   "scripts": {
     "test": "mocha --compilers coffee:coffee-script/register ./test/warmup_spec.coffee"
