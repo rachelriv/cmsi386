@@ -10,16 +10,14 @@ process.stdin.on 'end', ->
   wordCount = getWordCounts input
   printSorted wordCount
 
-getWordCounts = (s) ->
-  words = s.toLowerCase().split(/[^a-z']+/)
+getWordCounts = (string) ->
+  words = string.toLowerCase().split(/[^a-z']+/)
   result = {}
-  words.forEach (w) ->
-    result[w] = (if result.hasOwnProperty(w) then result[w] + 1 else 1)
+  words.forEach (word) ->
+    result[word] = (if result.hasOwnProperty(word) then result[word] + 1 else 1)
     return
-
   result
 
 printSorted = (wordCounts) ->
   Object.keys(wordCounts).sort().forEach (v, i) ->
     console.log v, wordCounts[v]
-
