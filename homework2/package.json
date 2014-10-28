@@ -5,11 +5,10 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "chai": "*",
     "sinon": "*",
+    "chai": "*",
     "sinon-chai": "*",
     "coffee-script": "*",
-    "child-process": "*",
     "request": "*"
   },
   "scripts": {
