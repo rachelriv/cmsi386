@@ -29,7 +29,7 @@ printFormatted = (teams) ->
 
 
 unless areValidArgs process.argv
-  console.log '''Please provide exactly one capital letter\
+  console.error '''Please provide exactly one capital letter\
                   representing a valid FIFA 2014 group'''
   process.exit 1
 

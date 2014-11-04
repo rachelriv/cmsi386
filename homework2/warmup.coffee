@@ -26,7 +26,7 @@ exports.powersOfTwo = (limit, callback) ->
 exports.prefixes = (str, callback) ->
   callback str.substring(0,i) for i in [0..str.length]
 
-exports.interleave = (a, b) ->
+interleave = exports.interleave = (a, b) ->
   result = []
   for index in [0..Math.max a.length, b.length]
     if index < a.length
@@ -36,4 +36,4 @@ exports.interleave = (a, b) ->
   result
 
 exports.stutter = (a) ->
-  @interleave a, a
+  interleave a, a
