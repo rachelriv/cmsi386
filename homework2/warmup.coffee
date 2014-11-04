@@ -16,8 +16,8 @@ exports.stripQuotes = (str) ->
 exports.scramble = (start) ->
   shuffle = start.split ''
   for char, index in shuffle
-    j = Math.floor (Math.random() * index)
-    [shuffle[index], shuffle[j]] = [shuffle[j], shuffle[index]]
+    j = Math.floor index + (Math.random() * (shuffle.length - index))
+    [shuffle[index], shuffle[j]] = [shuffle[j], shuffle[index]] if j isnt index
   shuffle.join ''
 
 exports.powersOfTwo = (limit, callback) ->
