@@ -1,36 +1,25 @@
 #include <iostream>
-#include <algorithm>
+#include <stdlib.h>
 using namespace std;
-// Are we allowed to #import <array> ?
-// Generics from http://en.wikipedia.org/wiki/Template_(C%2B%2B)
-// Array decay prevention from http://stackoverflow.com/questions/1863751/array-decay-to-pointers-in-templates
-template <typename T, int U, int V>
-T (&interleave(const T (&array1)[U], const T (&array2)[V]))[U + V] {
-    int sizeT = sizeof(T);
-    int sizeArray1 = sizeof(array1) / sizeT;
-    int sizeArray2 = sizeof(array2) / sizeT;
-    T *returnArray = new T[sizeArray1 + sizeArray2];
-    int returnArrayIndex = 0;
-    for (int i = 0; i < max(sizeArray1, sizeArray2); i++) {
-        if (i < sizeArray1) {
-           returnArray[returnArrayIndex] = array1[i]; 
-           returnArrayIndex++;
-        }
-        if (i < sizeArray2) {
-           returnArray[returnArrayIndex] = array2[i]; 
-           returnArrayIndex++;
-        }
+
+int* interleave(int a[], size_t asize, int b[], size_t bsize) {
+    int* result = (int *) malloc((asize + bsize) * sizeof(int));
+    int n = asize > bsize ? asize : bsize;
+    for (int k = 0, i = 0; i < n; i++) {
+        if (i < asize) result[k++] = a[i];
+        if (i < bsize) result[k++] = b[i];
     }
-    return returnArray;
+    return result;
 }
 
 int main() {
     int arr1[] = {1, 2};
     int arr2[] = {4, 5, 6};
-    int arr3[] = interleave(arr1, arr2);
-    cout << "[" << arr3[0];
-    for (int i = 0; i < sizeof(arr3) / sizeof(int); i++) {
-        cout << "," << arr3[i];
+    size_t x = 2;
+    size_t y = 3;
+    int* result = (int *) malloc(5 * sizeof(int));
+    result = interleave(arr1, x, arr2, y);
+    for (int i = 0; i < 5; i++){
+        cout << result[i];
     }
-    cout << "]" << endl;
 }
