@@ -184,3 +184,30 @@ def same_fringe(t1, t2):
   
   return True
 ```
+
+(c)
+
+```javascript
+var sameFringe = function(t1, t2) {
+  var nextFringe = function(tree, callback) {
+    if (tree.children === []) {
+      return callback(tree);
+    } else {
+      for (var i = 0; i < tree.children.length; i++) {
+        if (!nextFringe(tree.children[i], callback)) {
+          return false;
+        }
+      }
+      return true;
+    }
+  }
+  var success = nextFringe(t1, function(fringe1) {
+    nextFringe(t2, function(fringe2) {
+      return fringe1 === fringe2;
+    });
+  });
+  
+  return success;
+}
+```
+
