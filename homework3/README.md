@@ -29,7 +29,7 @@
 (a)
 
 The programmer was probably trying to return the object `{x: 5}`, 
-but since javascript inserts a semicolon automatically after a
+but since JavaScript inserts a semicolon automatically after a
 return followed by a newline, the code returns undefined. This
 code consists of two statements, the first statement is a [return](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/return) statement, which returns `undefined` since the expression is omitted. The second is a never-reachable [block](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block) statement
 with a [label](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/label) `x` that evaluates 5.
@@ -39,7 +39,7 @@ be evaluated.
 
 (b)
 
-What the programmer was probably expecting the second newline to end the
+The programmer was probably expecting the second newline to end the
 declaration/initialization of `a`, but in fact, the code is 
 initializing `a` to be `b +
 b(4+5).toString(16)`. This will get us a `TypeError` because `b` is not a
@@ -145,7 +145,7 @@ def f(b):
 a + f(b) - c * d
 ```
 
-If we have Java style defined order, there is left to right ordering, so `f(b)`
+If we have Java style defined evaluation order, there is left to right ordering, so `f(b)`
 will be called, and thus `c` will be mutated before `c * d` will be called, and
 the statement will be evaluated to `0`. 
 
