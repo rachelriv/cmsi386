@@ -45,7 +45,7 @@ initializing `a` to be `b +
 b(4+5).toString(16)`. This will get us a `TypeError` because `b` is not a
 function.
 
-Again, Python assumes that each physical line corresponds to a logical line (see previous answer). Thus, the second newline <em>would</em> end the declaration/initialization of `a`.
+Again, Python assumes that each physical line corresponds to a logical line (see previous answer). Thus, the second newline _would_ end the declaration/initialization of `a`.
 
 
 (c)
@@ -58,7 +58,7 @@ equivalent to `"mundo"["Ciao"]...`. `"mundo"["Ciao"]` evaluates to
 `undefined`. This throws a `TypeError` because you cannot invoke the
 function `forEach` on `undefined`.  
 
-Again, Python assumes that each physical line corresponds to a logical line (see answer 2a). Thus, the second newline <em>would</em> end the declaration/initialization of `a`.
+Again, Python assumes that each physical line corresponds to a logical line (see answer 2a). Thus, the second newline _would_ end the declaration/initialization of `a`.
 
 
 (d)
