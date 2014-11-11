@@ -211,3 +211,22 @@ var sameFringe = function(t1, t2) {
 }
 ```
 
+## Problem 10
+
+According to [Wikipedia](https://en.wikipedia.org/wiki/Template_(C%2B%2B)#Advantages_and_disadvantages)
+
+* Templates are hard to validate, and compiler errors are strange and incomprehensible.
+* They increase the size of the code, because the types need to be locked at compile-time, rather than runtime.
+* They aren't universal - some compilers don't know how to handle them. 
+* The future maintainer of the code may have difficulty understanding what was initially intended by the programmer. 
+* Templates are type safe, which reduces flexibility. 
+* Nested templates have varrying support, so if the user wants to nest their operations, that may not work properly. 
+
+A macro may have helped, because those are expanded by the preprocessor, rather than the compiler and have much greater portability.
+
+```c++
+#define if_then_else(x, y, z) (x ? y : z)
+```
+
+But really, the student should just learn how to use ternary expressions properly
+
