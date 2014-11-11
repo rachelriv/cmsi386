@@ -31,37 +31,35 @@
 The programmer was probably trying to return the object `{x: 5}`, 
 but since javascript inserts a semicolon automatically after a
 return followed by a newline, the code returns undefined. This
-code consists of two statements, the first statement returns 
-undefined, and the second is a never-reachable block statement
+code consists of two statements, the first statement is a [return](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/return) statement, which returns `undefined` since the expression is omitted. The second is a never-reachable [block](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block) statement
 with a [label](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/label) `x` that evaluates 5.
 
-In python, the newlines are significant and the function would return
-`None`, and the statement containing the dictionary `{'x': 5}` will never
+Python assumes that each physical line corresponds to a [logical line](https://docs.python.org/2/reference/lexical_analysis.html#logical-lines). Since statements cannot cross logical line boundaries except where NEWLINE is allowed by the syntax, the equivalent Python code would return `None`, since a [return statement](https://docs.python.org/2/reference/simple_stmts.html#the-return-statement) with no expression to evaluate will substitute `None`. The statement containing the dictionary `{'x': 5}` will never
 be evaluated.
 
 (b)
 
 What the programmer was probably expecting the second newline to end the
-declaration/initialization/ of `a`, but in fact, the code is 
+declaration/initialization of `a`, but in fact, the code is 
 initializing `a` to be `b +
 b(4+5).toString(16)`. This will get us a `TypeError` because `b` is not a
 function.
 
-In python, newlines are significant, and the second newline would end the
-declaration/intialization of `a`. 
+Again, Python assumes that each physical line corresponds to a logical line (see previous answer). Thus, the second newline <em>would</em> end the declaration/initialization of `a`.
+
 
 (c)
 
 The programmer probably thought that the first newline ended the
 declaration/initialization of `place`, but `place` was intialized to
-`"mundo"["Hola", "Ciao"].forEach(...)`. The comma operator evaluates each
+`"mundo"["Hola", "Ciao"].forEach(...)`. The [comma](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Comma_Operator) operator evaluates each
 of the operands and returns the value of the last operand. The code is
 equivalent to `"mundo"["Ciao"]...`. `"mundo"["Ciao"]` evaluates to 
 `undefined`. This throws a `TypeError` because you cannot invoke the
-function `forEach` on `undefined`. 
+function `forEach` on `undefined`.  
 
-In Python, newlines are significant, and the declaration/initialization
-ends with newline. 
+Again, Python assumes that each physical line corresponds to a logical line (see answer 2a). Thus, the second newline <em>would</em> end the declaration/initialization of `a`.
+
 
 (d)
 
@@ -69,13 +67,13 @@ The programmer probably thought she was just declaring a variable named
 `sayHello` and initializing it to a function that alerts "Hello", and 
 creating an anonymous closure that alerts "Goodbye". She probably expected
 that only "Goodbye" would get alerted because that closure would be
-immediatedly executed. However, what the code is doing is initializing
+immediatedly executed. However, what the code is actually doing is initializing
 `sayHello` to a function alerting "Hello" with an argument. That argument
 is evaluated and it alerts "Goodbye" *first*, before evaluating to
 undefined. Next, `sayHello` is executed with the argument `undefined`,
 and "Hello" is alerted next. 
 
-In python, there is really no equivalent, since functions in general
+In Python, there is really no equivalent, since functions 
 cannot be immediately invoked. However, if this were possible, newlines
 are significant, and the initialization of `sayHello` would end when the
 programmer would expect it to. 
