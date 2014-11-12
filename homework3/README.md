@@ -202,7 +202,7 @@ var sameFringe = function(t1, t2) {
     }
   }
   var success = nextFringe(t1, function(fringe1) {
-    nextFringe(t2, function(fringe2) {
+    return nextFringe(t2, function(fringe2) {
       return fringe1 === fringe2;
     });
   });
