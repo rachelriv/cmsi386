@@ -171,7 +171,8 @@ def same_fringe(t1, t2):
       yield tree
     else:
       for child in tree_children:
-        next_fringe(child)
+        for fringe in next_fringe(child):
+          yield fringe
   
   t1_fringe = next_fringe(t1)
   t2_fringe = next_fringe(t2)
