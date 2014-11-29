@@ -9,7 +9,7 @@ double (*d())[n]; /* a function returning a pointer to an array of n doubles */
 typechecking the expression. I'd feel less worried if I could detect cycles in the type dependency graph.
 
 7) The stack may have been cleared upon starting the application. Thus, every time foo() is called the
-new activation record ends up exactly where the old one was. This behavior is nondeterministic though since
+new activation record ends up exactly where the old one was. In addition, many languages, like C, also initialize arithmetic types to positive/unsigned zero if they are not assigned to a value. (See <a href="http://c0x.coding-guidelines.com/6.7.8.html">C coding guidelines</a> and <a href="https://stackoverflow.com/questions/1597405/what-happens-to-a-declared-uninitialized-variable-in-c-does-it-have-a-value">this stackoverflow post</a>). This behavior is nondeterministic though since
 on other systems the stack may have not been initialized or cleared. Therefore, you cannot count on any
 specific behavior to be consistent.
 
