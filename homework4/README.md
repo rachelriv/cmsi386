@@ -21,7 +21,6 @@ Line 1:
 * `setX(0)` sets the global `x` to 0.
 * All calls to `setX` and `printX` within foo use the localized `x`. Thus, when foo is invoked in this line, the localized `x` is set to 1 and 1 is printed.
 * `printX()` refers to the global `x`, which has been set to 0. Thus, 0 is printed.  
-
 Output after the first line is executed: 10
 
 Line 2:
@@ -59,11 +58,8 @@ Line 2:
 `setX(0); foo(setX, printX, 2); printX();`
 
 *`setX(0)` sets the global `x` to 0.
-
 * In `foo`, the global `x` is set to 2 since `setX` refers to the global `x`. The localized `x` is not set, so some implementation-specific garbage is printed. (We'll represent this with a question mark).
-
 * `printX()` refers to the global `x`, which has been set to 2. Thus, 2 is printed.  
-
 Output after the second line is executed: 10?2
 
 Line 3:
@@ -72,7 +68,6 @@ Line 3:
 * `setX(0)` sets the global `x` to 0.
 * In `foo`, the localized `x` is set to 3. However, the `printX()` refers to the global `x`, which is 0. Thus, 0 is printed.
 * `printX()` refers to the global `x`, which is still 0. Thus, 0 is printed.  
-
 Output after the third line is executed: 10?200
 
 Line 4:
