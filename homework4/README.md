@@ -18,8 +18,8 @@ specific behavior to be consistent.
 Line 1:
 `setX(0); foo(setX, printX, 1); printX();`
 
-* `setX(0)` sets the global x to 0.
-* All calls to `setX` and `printX` within foo use the localized `x`. Thus, when foo is invoked in this line, the localized x is set to 1 and 1 is printed.
+* `setX(0)` sets the global `x` to 0.
+* All calls to `setX` and `printX` within foo use the localized `x`. Thus, when foo is invoked in this line, the localized `x` is set to 1 and 1 is printed.
 * `printX()` refers to the global `x`, which has been set to 0. Thus, 0 is printed.  
 
 Output after the first line is executed: 10
@@ -27,40 +27,40 @@ Output after the first line is executed: 10
 Line 2:
 `setX(0); foo(setX, printX, 2); printX();`
 
-* `setX(0)` sets the global x to 0.
-* When foo is invoked in this line, the localized x is set to 2 and 2 is printed.
-* `printX()` refers to the global `x`, which has been set to 0. Thus, 0 is printed. 
+* `setX(0)` sets the global `x` to 0.
+* When foo is invoked in this line, the localized `x` is set to 2 and 2 is printed.
+* `printX()` refers to the global `x`, which has been set to 0. Thus, 0 is printed.  
 Output after the second line is executed: 1020
 
 Line 3:
 `setX(0); foo(setX, printX, 3); printX();`  
-* `setX(0)` sets the global x to 0.
-* When foo is invoked in this line, the localized x is set to 3 and 3 is printed.
+* `setX(0)` sets the global `x` to 0.
+* When foo is invoked in this line, the localized `x` is set to 3 and 3 is printed.
 * `printX()` refers to the global `x`, which has been set to 0. Thus, 0 is printed.  
 Output after the third line is executed: 102030
 
 Line 4:
 `setX(0); foo(setX, printX, 4); printX();`  
-* `setX(0)` sets the global x to 0.
-* When foo is invoked in this line, the localized x is set to 4 and 4 is printed.
+* `setX(0)` sets the global `x` to 0.
+* When foo is invoked in this line, the localized `x` is set to 4 and 4 is printed.
 * `printX()` refers to the global `x`, which has been set to 0. Thus, 0 is printed.  
 Output after the fourth line is executed: **10203040**  
 
-Deep binding binds the environment at the time the procedure is passed as an argument. This is applicable when we pass setX and printX as arguments. When setX and printX are passed as arguments, x refers to the global x. With deep binding, the following happens in the main part of the script:
+Deep binding binds the environment at the time the procedure is passed as an argument. This is applicable when we pass `setX` and `printX` as arguments. When `setX` and `printX` are passed as arguments, `x` refers to the global `x`. With deep binding, the following happens in the main part of the script:
 
 Line 1:
 `setX(0); foo(setX, printX, 1); printX();`
-* `setX(0)` sets the global x to 0.
-* In `foo`, the local `x` is 1. Thus, 1 is printed.
+* `setX(0)` sets the global `x` to 0.
+* In `foo`, the local `x` is set to 1. Thus, 1 is printed.
 * `printX()` refers to the global `x`, which has been set to 0. Thus, 0 is printed.  
 Output after the first line is executed: 10
 
 Line 2:
 `setX(0); foo(setX, printX, 2); printX();`
 
-*`setX(0)` sets the global x to 0.
+*`setX(0)` sets the global `x` to 0.
 
-* In `foo`, the global x is set to 2. The localized x is not set, so some implementation-specific garbage is printed. (We'll represent this with a `?` symbol).
+* In `foo`, the global `x` is set to 2 since `setX` refers to the global `x`. The localized `x` is not set, so some implementation-specific garbage is printed. (We'll represent this with a question mark).
 
 * `printX()` refers to the global `x`, which has been set to 2. Thus, 2 is printed.  
 
@@ -69,15 +69,15 @@ Output after the second line is executed: 10?2
 Line 3:
 `setX(0); foo(setX, printX, 3); printX();`
 
-* `setX(0)` sets the global x to 0.
-* In `foo`, the localized x is set to 3. However, the `printX()` refers to the global `x`, which is 0. Thus, 0 is printed.
+* `setX(0)` sets the global `x` to 0.
+* In `foo`, the localized `x` is set to 3. However, the `printX()` refers to the global `x`, which is 0. Thus, 0 is printed.
 * `printX()` refers to the global `x`, which is still 0. Thus, 0 is printed.  
 
 Output after the third line is executed: 10?200
 
 Line 4:
 `setX(0); foo(setX, printX, 4); printX();`
-* `setX(0)` sets the global x to 0.
+* `setX(0)` sets the global `x` to 0.
 * In `foo`, the global `x` is set to 4 and since `printX()` refers to the global `x`, 4 is printed.
 * `printX()` refers to the global `x`, which was just set to 4. Thus, 4 is printed.  
 Output after the fourth line is executed: **10?20044**
