@@ -77,7 +77,7 @@ Line 4:
 * `printX()` refers to the global `x`, which was just set to 4. Thus, 4 is printed.
 Output after the fourth line is executed: **10?20044**
 
-9) In early Fortran implementations, the compiler would place the value of the literal 2 somewhere in memory. Every time the compiler would then see a 2T, it would have to go fetch whatever was in the previously assigned memory address for the literal 2. However, the earlier implementation of Fortran allowed the programmer to even change constants. In this code, the value in the memory address assigned originally assigned for the literal 2 was changed.
+9) In early Fortran implementations, the compiler would place the value of the literal 2 somewhere in memory. Every time the compiler would then see a 2, it would have to go fetch whatever was in the previously assigned memory address for the literal 2. However, the earlier implementation of Fortran allowed the programmer to even change constants. In this code, the value in the memory address assigned originally assigned for the literal 2 was changed.
 Current Fortran compilers still pass by reference, but make a copy of literals/constants and pass references to the _copies_.
 
 10) call by value: 1,2,3,4;
