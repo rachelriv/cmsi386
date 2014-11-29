@@ -57,7 +57,7 @@ Output after the first line is executed: 10
 Line 2:
 `setX(0); foo(setX, printX, 2); printX();`
 
-*`setX(0)` sets the global `x` to 0.
+* `setX(0)` sets the global `x` to 0.
 * In `foo`, the global `x` is set to 2 since `setX` refers to the global `x`. The localized `x` is not set, so some implementation-specific garbage is printed. (We'll represent this with a question mark).
 * `printX()` refers to the global `x`, which has been set to 2. Thus, 2 is printed.  
 Output after the second line is executed: 10?2
