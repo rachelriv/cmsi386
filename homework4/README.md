@@ -1,24 +1,4 @@
-1)  Using gotos may be acceptable to break out of nested loops in languages that do not have labeled loops (Java, JavaScript, etc.).
 
-The goto-less version that Rubin used in his letter  is a fair amount more complicated than the version that includes a goto. I've translated the pseudo-code from the paper into C below:
-
-http://ideone.com/KMPnuH
-
-Went too far, have to back up
-
-
-Other languages have more powerful constructs.
-(show Java code here)
-
-It seems like Rubin didn't consider the `return` statement.
-
-Python, JavaScript, and other languages that allow functions as first-class values allow us to work on lists directly. To see if a list has a non-zero row in a functional language, we apply the function
-λa. exists(all(λx. x == 0))
-Okay, well Rubin's example asked us to find the index of the first non-zero row, so we need a little more than one line. If we had a first function to give us the first index of a list satifsying a predicate, with -1 returned if no row satifies it, we can use:
-λa. first(all(λx. x == 0))
-Python has the equivalent of "first" using the function next (no kidding) on generators. Here's a one liner:
-next((i for i,row in enumerate(a) if all(x == 0 for x in row)), -1)
-Here we create a generator that spits out index,row pairs for each row, provided they are all zeros. The function next returns the first such one, or, if no such row exists, the default value of -1 that we provided. Super cool, but readable? The point is, we are using high-level programming constructs and not thinking about stupid loops and counters.
 4)
 ```c
 double *a[n]; /* an array of n pointers to doubles */
