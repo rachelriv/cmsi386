@@ -2,7 +2,7 @@
 
 Edsget Dijkstra, the man who became the iconic opponent of goto statements, wrote a famous letter in 1968 called _Go To Statement Considered Harmful_ [<a href="http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD215.PDF">2</a>]. In the letter, Dijkstra discussed why the goto statement should be "abolished from all 'higher level' programming languages (i.e. everything except, perhaps, plain machine code)" [<a href="http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD215.PDF">2</a>]. Dijkstra argued that goto statements complicate the task of analyzing and checking the correctness of programs. Though Dijkstra's influential letter made a compelling argument, alternative viewpoints still exist. In Donald Knuth's _Structured Programming with go to Statements_, Knuth explored cases where eliminating goto statements did not really work [<a href="http://sbel.wisc.edu/Courses/ME964/Literature/knuthProgramming1974.pdf">3</a>]. Knuth asserted that goto statements are not the heart of the problem. According to Knuth, there has been "far too much emphasis on go to elimination" instead of "working directly for a qualitative goal like good program structure" [<a href="http://sbel.wisc.edu/Courses/ME964/Literature/knuthProgramming1974.pdf">3</a>].
 
-Frank Rubin published a criticism of Dijkstra's letter in 1987 called _'GOTO Considered Harmful' Considered Harmful_ [<a href="http://cacm.acm.org/magazines/1987/5/10097-acm-forum/abstract">4</a>]. In this criticism, Rubin uses the following example (rewritted by @rtoal in C) to argue in favor of a goto statement:
+Frank Rubin published a criticism of Dijkstra's letter in 1987 called _'GOTO Considered Harmful' Considered Harmful_ [<a href="http://cacm.acm.org/magazines/1987/5/10097-acm-forum/abstract">4</a>]. In this criticism, Rubin used the following example (rewritted by @rtoal in C) to argue in favor of the goto statement:
 ```c
 int first_zero_row = -1;              /* assume no such row */
 int i, j;
@@ -14,6 +14,21 @@ for (i = 0; i < n; i++) {             /* for each row */
     break;                            /* get out of the whole thing */
     next: ;
 }                                     /* first_zero_row is now set */
+```
+
+Rubin recognized that there is a manner in which one could write this program without the use of a goto (rewritten here in C):
+```c
+int j;
+int i = 0;
+int first_zero_row = -1;
+do {
+    j = 0;
+    while (j < n && A[i][j] == 0) j++;
+    i++;
+} while (i < n && j < n);
+if (j >= n){
+    first_zero_row = i - 1; // went one too far
+}
 ```
 
 4)
