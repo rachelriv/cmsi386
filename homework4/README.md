@@ -58,7 +58,13 @@ row: for (var i = 0; i < n; i++){
     return -1;
 }
 ```
-
+Python, however, does not support labeled loops. There was a proposal to include named loops in python <a href="https://www.python.org/dev/peps/pep-3136/">PEP3136</a>, however, it was rejected with an explanation <a href="https://mail.python.org/pipermail/python-3000/2007-July/008663.html">here</a>. It was rejected on the basis that code so complicated to
+require this feature is very rare. However, if you wanted to accomplish this in Python, you could still do so without a goto. Python has a cool `all` function that returns `True` if all elements of the iterable are `True`. Since zero is falsy in Python, you could use this function in order to create a solution in Python.
+```python
+for i, row in enumerate(a):
+  if (all(row)): continue
+  return i
+```
 
 4)
 ```c
