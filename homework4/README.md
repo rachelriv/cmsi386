@@ -30,6 +30,8 @@ if (j >= n){
     first_zero_row = i - 1; // went one too far
 }
 ```
+http://ideone.com/KMPnuH
+
 
 4)
 ```c
