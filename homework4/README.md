@@ -38,7 +38,6 @@ Be that as it may, it seems to me as if Rubin omitted a version of the algorithm
 Modern languages, however, usually have powerful constructs that can make this type of situation much easier to program. For example, Java and JavaScript both have labeled loops. Thus, Java and JavaScript would allow you to do the following respectively.
 ```java
 //Java
-int firstZeroRow = -1;
 row: for (int i = 0; i < n; i++){
     col: for(int j = 0; j < n; j++){
         if(a[i][j] != 0) {
