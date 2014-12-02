@@ -59,13 +59,15 @@ row: for (var i = 0; i < n; i++){
 }
 ```
 Python, however, does not support labeled loops. There was a proposal to include named loops in python <a href="https://www.python.org/dev/peps/pep-3136/">PEP3136</a>, however, it was rejected with an explanation <a href="https://mail.python.org/pipermail/python-3000/2007-July/008663.html">here</a>. It was rejected on the basis that code so complicated to
-require this feature is very rare. However, if you wanted to accomplish this in Python, you could still do so without a goto. Python has a cool `all` function that returns `True` if all elements of the iterable are `True`. Since zero is falsy in Python, you could use this function in order to create a solution in Python.
+require this feature is very rare. However, if you wanted to accomplish this in Python, you could still do so without a goto. Python has a cool `all` function that returns `True` if all elements of the iterable are `True`. Since zero is falsy in Python, this function can easily be used in order to create a solution in Python.
 ```python
 # Python
 for i, row in enumerate(a):
   if (all(row)): continue
   return i
 ```
+
+All in all, it seems as if goto statements are really not needed for higher-level programming languages. I do, however, think that they may be acceptable in some cases in C since C does not have these nice, powerful language constructs.
 
 4)
 ```c
