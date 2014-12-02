@@ -1,4 +1,5 @@
-
+1) `goto` is a statement found in many programming languages that performs a one-way transfer of control to another line of code, typically identified using a label [<a href="http://en.wikipedia.org/wiki/Goto">1</a>]. At the machine code level, a `goto` is a form of branch or jump statement. Though the use of `goto` used to be fairly common, there has been considerable debate in academia and industry on the merits and use of `goto` statements.
+Edsget Dijkstra, the man who became the iconic opponent of `goto` statements, wrote a famous letter in 1968 called _Go To Statement Considered Harmful_ [<a href="http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD215.PDF">2</a>]. In the letter, Dijkstra discusses why the `goto` statement should be "abolished from all 'higher level' programming languages (i.e. everything except, perhaps, plain machine code)" [<a href="http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD215.PDF">2</a>].
 4)
 ```c
 double *a[n]; /* an array of n pointers to doubles */
