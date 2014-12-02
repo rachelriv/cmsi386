@@ -8,7 +8,7 @@ int first_zero_row = -1;              /* assume no such row */
 int i, j;
 for (i = 0; i < n; i++) {             /* for each row */
     for (j = 0; j < n; j++) {         /* for each entry in the row */
-        if (A[i][j]) goto next;       /* if non-zero go on to the next row */
+        if (a[i][j]) goto next;       /* if non-zero go on to the next row */
     }
     first_zero_row = i;               /* went all through the row, you got it! */
     break;                            /* get out of the whole thing */
@@ -16,21 +16,41 @@ for (i = 0; i < n; i++) {             /* for each row */
 }                                     /* first_zero_row is now set */
 ```
 
-Rubin recognized that there is a manner in which one could write this program without the use of a goto (rewritten here in C):
+Rubin recognized that there is a manner in which one could write this program without the use of a goto rewritten here in C (http://ideone.com/KMPnuH):
 ```c
 int j;
 int i = 0;
 int first_zero_row = -1;
 do {
     j = 0;
-    while (j < n && A[i][j] == 0) j++;
+    while (j < n && a[i][j] == 0) j++;
     i++;
 } while (i < n && j < n);
 if (j >= n){
     first_zero_row = i - 1; // went one too far
 }
 ```
-http://ideone.com/KMPnuH
+The problem with this solution is that it is very hard to read. I was forced to get out a paper and pen and go through a few iterations of the algorithm myself before I fully understood what was going on. Thus, I think that Rubin makes a fairly compelling argument here since the version with the goto statement is much more intuitive.
+
+Be that as it may, it seems to me as if Rubin omitted a version of the algorithm that utilized C's `return statement`.
+```c
+\\ TODO: add example with return here
+```
+
+Modern languages, however, usually have powerful constructs that this type of situation much easier to program. For example, Java and JavaScript both have labeled loops. Thus, Java and JavaScript would allow you to do the following respectively:
+```java
+int firstZeroRow = -1;
+row: for (int i = 0; i < n; i++){
+    col: for(int j = 0; j < n; j++){
+        if(a[i][j] != 0) {
+            continue row;
+        }
+    }
+    firstZeroRow = i;
+    break;
+}
+```
+
 
 
 4)
