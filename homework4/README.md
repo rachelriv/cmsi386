@@ -34,7 +34,7 @@ The problem with this solution is that it is very hard to read. I was forced to 
 
 Be that as it may, it seems to me as if Rubin omitted a version of the algorithm that utilized C's `return statement`.
 ```c
-\\ TODO: add example with return here
+// TODO: add example with return here
 ```
 
 Modern languages, however, usually have powerful constructs that this type of situation much easier to program. For example, Java and JavaScript both have labeled loops. Thus, Java and JavaScript would allow you to do the following respectively:
