@@ -32,10 +32,8 @@ if (j >= n){
 ```
 The problem with this solution is that it is very hard to read. I was forced to get out a paper and pen and go through a few iterations of the algorithm myself before I fully understood what was going on. Thus, I think that Rubin's argument is compelling since the solution with the goto statement is much more intuitive.
 
-Be that as it may, it seems to me as if Rubin omitted a version of the algorithm that utilizes C's `return` statement. We will show examples that _do_ utilize the `return` statement in the Java and JavaScript examples below.
+It seems as if goto statements may be appropriate for languages like C that do not have more powerful constructs (e.g. labeled loops). Most modern languages, however, _do_ have these powerful constructs. This makes this type of situation much easier to program. Examples in Java and JavaScript can be found below (Note: These examples make use of `return` statements, which Rubin seemed to have forgotten to use in his argument):
 
-
-Modern languages, however, usually have powerful constructs that can make this type of situation much easier to program. For example, Java and JavaScript both have labeled loops. Thus, Java and JavaScript would allow you to do the following respectively.
 ```java
 //Java
 row: for (int i = 0; i < n; i++){
