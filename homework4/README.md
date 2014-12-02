@@ -1,8 +1,8 @@
 1) __Goto__ is a statement found in many programming languages that performs a one-way transfer of control to another line of code, which is typically identified using a label [<a href="http://en.wikipedia.org/wiki/Goto">1</a>]. At the machine code level, a goto is a form of branch or jump statement. Though the use of goto was formally common, there has been considerable debate in academia and industry on the merits and use of goto statements.
 
-Edsget Dijkstra, the man who became the iconic opponent of goto statements, wrote a famous letter in 1968 called _Go To Statement Considered Harmful_ [<a href="http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD215.PDF">2</a>]. In the letter, Dijkstra discussed why the goto statement should be "abolished from all 'higher level' programming languages (i.e. everything except, perhaps, plain machine code)" [<a href="http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD215.PDF">2</a>]. Dijkstra argued that goto statements complicate the task of analyzing and checking the correctness of programs. Though Dijkstra's influential letter made a compelling argument, alternative viewpoints still exist. In Donald Knuth's _Structured Programming with go to Statements_, Knuth explored cases where eliminating goto statements did not really work [<a href="http://sbel.wisc.edu/Courses/ME964/Literature/knuthProgramming1974.pdf">3</a>]. Knuth asserted that goto statements are not the heart of the problem. According to Knuth, there has been "far too much emphasis on go to elimination" instead of "working directly for a qualitative goal like good program structure" [<a href="http://sbel.wisc.edu/Courses/ME964/Literature/knuthProgramming1974.pdf">3</a>].
+Edsget Dijkstra, the man who became the iconic opponent of goto statements, wrote a famous letter in 1968 called _Go To Statement Considered Harmful_ [<a href="http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD215.PDF">2</a>]. In the letter, Dijkstra discussed why the goto statement should be "abolished from all 'higher level' programming languages (i.e. everything except, perhaps, plain machine code)" [<a href="http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD215.PDF">2</a>]. Dijkstra argued that goto statements complicate the task of analyzing and checking the correctness of programs. Though Dijkstra's influential letter made a compelling argument, not everyone shares his viewpoint. In Donald Knuth's _Structured Programming with go to Statements_, Knuth explored cases where eliminating goto statements did not really work [<a href="http://sbel.wisc.edu/Courses/ME964/Literature/knuthProgramming1974.pdf">3</a>]. Knuth asserted that goto statements are not the heart of the problem. According to Knuth, there has been "far too much emphasis on go to elimination" instead of "working directly for a qualitative goal like good program structure" [<a href="http://sbel.wisc.edu/Courses/ME964/Literature/knuthProgramming1974.pdf">3</a>].
 
-Frank Rubin published a criticism of Dijkstra's letter in 1987 called _'GOTO Considered Harmful' Considered Harmful_ [<a href="http://cacm.acm.org/magazines/1987/5/10097-acm-forum/abstract">4</a>]. In this criticism, Rubin used the following example (rewritted by @rtoal in C) to argue in favor of the goto statement:
+Frank Rubin also disagrees with Dijkstra's beliefs. In 1987, Rubin published a criticism of Dijkstra's letter called _'GOTO Considered Harmful' Considered Harmful_ [<a href="http://cacm.acm.org/magazines/1987/5/10097-acm-forum/abstract">4</a>]. In this criticism, Rubin used the following example (rewritted by @rtoal in C) to argue in favor of the goto statement:
 ```c
 int first_zero_row = -1;              /* assume no such row */
 int i, j;
@@ -30,27 +30,37 @@ if (j >= n){
     first_zero_row = i - 1; // went one too far
 }
 ```
-The problem with this solution is that it is very hard to read. I was forced to get out a paper and pen and go through a few iterations of the algorithm myself before I fully understood what was going on. Thus, I think that Rubin makes a fairly compelling argument here since the version with the goto statement is much more intuitive.
+The problem with this solution is that it is very hard to read. I was forced to get out a paper and pen and go through a few iterations of the algorithm myself before I fully understood what was going on. Thus, I think that Rubin's argument is compelling since the solution with the goto statement is much more intuitive.
 
-Be that as it may, it seems to me as if Rubin omitted a version of the algorithm that utilized C's `return statement`.
-```c
-// TODO: add example with return here
-```
+Be that as it may, it seems to me as if Rubin omitted a version of the algorithm that utilizes C's `return` statement. We will show examples that _do_ utilize the `return` statement in the Java and JavaScript examples below.
 
-Modern languages, however, usually have powerful constructs that this type of situation much easier to program. For example, Java and JavaScript both have labeled loops. Thus, Java and JavaScript would allow you to do the following respectively:
+
+Modern languages, however, usually have powerful constructs that can make this type of situation much easier to program. For example, Java and JavaScript both have labeled loops. Thus, Java and JavaScript would allow you to do the following respectively.
 ```java
+//Java
 int firstZeroRow = -1;
 row: for (int i = 0; i < n; i++){
     col: for(int j = 0; j < n; j++){
         if(a[i][j] != 0) {
             continue row;
         }
+        return i;
     }
-    firstZeroRow = i;
-    break;
+    return -1;
 }
 ```
-
+```javascript
+// JavaScript
+row: for (var i = 0; i < n; i++){
+    col: for (var j = 0; j < n; j++){
+        if(a[i][j] !== 0){
+            continue row;
+        }
+        return i;
+    }
+    return -1;
+}
+```
 
 
 4)
