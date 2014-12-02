@@ -16,7 +16,7 @@ for (i = 0; i < n; i++) {             /* for each row */
 }                                     /* first_zero_row is now set */
 ```
 
-Rubin recognized that there is a manner in which one could write this program without the use of a goto rewritten here in C (http://ideone.com/KMPnuH):
+Rubin recognized that there is a manner in which one could write this program without the use of a goto (rewritten here in C)http://ideone.com/KMPnuH :
 ```c
 int j;
 int i = 0;
@@ -65,6 +65,7 @@ require this feature is very rare. However, if you wanted to accomplish this in 
 for i, row in enumerate(a):
   if (all(row)): continue
   return i
+return -1
 ```
 
 All in all, it seems as if goto statements are really not needed for higher-level programming languages. I do, however, think that they may be acceptable in some cases in C since C does not have these nice, powerful language constructs.
