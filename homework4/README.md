@@ -1,3 +1,74 @@
+1) __Goto__ is a statement found in many programming languages that performs a one-way transfer of control to another line of code, which is typically identified using a label [<a href="http://en.wikipedia.org/wiki/Goto">1</a>]. At the machine code level, a goto is a form of branch or jump statement. Though the use of goto was formally common, there has been considerable debate in academia and industry on the merits and use of goto statements.
+
+Edsget Dijkstra, the man who became the iconic opponent of goto statements, wrote a famous letter in 1968 called _Go To Statement Considered Harmful_ [<a href="http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD215.PDF">2</a>]. In the letter, Dijkstra discussed why the goto statement should be "abolished from all 'higher level' programming languages (i.e. everything except, perhaps, plain machine code)" [<a href="http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD215.PDF">2</a>]. Dijkstra argued that goto statements complicate the task of analyzing and checking the correctness of programs. Though Dijkstra's influential letter made a compelling argument, not everyone shares his viewpoint. In Donald Knuth's _Structured Programming with go to Statements_, Knuth explored cases where eliminating goto statements did not really work [<a href="http://sbel.wisc.edu/Courses/ME964/Literature/knuthProgramming1974.pdf">3</a>]. Knuth asserted that goto statements are not the heart of the problem. According to Knuth, there has been "far too much emphasis on go to elimination" instead of "working directly for a qualitative goal like good program structure" [<a href="http://sbel.wisc.edu/Courses/ME964/Literature/knuthProgramming1974.pdf">3</a>].
+
+Frank Rubin also disagrees with Dijkstra's beliefs. In 1987, Rubin published a criticism of Dijkstra's letter called _'GOTO Considered Harmful' Considered Harmful_ [<a href="http://cacm.acm.org/magazines/1987/5/10097-acm-forum/abstract">4</a>]. In this criticism, Rubin used the following example (rewritted by @rtoal in C) to argue in favor of the goto statement:
+```c
+int first_zero_row = -1;              /* assume no such row */
+int i, j;
+for (i = 0; i < n; i++) {             /* for each row */
+    for (j = 0; j < n; j++) {         /* for each entry in the row */
+        if (a[i][j]) goto next;       /* if non-zero go on to the next row */
+    }
+    first_zero_row = i;               /* went all through the row, you got it! */
+    break;                            /* get out of the whole thing */
+    next: ;
+}                                     /* first_zero_row is now set */
+```
+
+Rubin recognized that there is a manner in which one could write this program without the use of a goto (rewritten here in C)http://ideone.com/KMPnuH :
+```c
+int j;
+int i = 0;
+int first_zero_row = -1;
+do {
+    j = 0;
+    while (j < n && a[i][j] == 0) j++;
+    i++;
+} while (i < n && j < n);
+if (j >= n){
+    first_zero_row = i - 1; // went one too far
+}
+```
+The problem with this solution is that it is very hard to read. I was forced to get out a paper and pen and go through a few iterations of the algorithm myself before I fully understood what was going on. Thus, I think that Rubin's argument is compelling since the solution with the goto statement is much more intuitive.
+
+It seems as if goto statements may be appropriate for languages like C that do not have more powerful constructs (e.g. labeled loops). Most modern languages, however, _do_ have these powerful constructs. This makes this type of situation much easier to program. Examples in Java and JavaScript can be found below (Note: These examples make use of `return` statements, which Rubin seemed to have forgotten to use in his argument):
+
+```java
+//Java
+row: for (int i = 0; i < n; i++){
+    col: for(int j = 0; j < n; j++){
+        if(a[i][j] != 0) {
+            continue row;
+        }
+        return i;
+    }
+    return -1;
+}
+```
+```javascript
+// JavaScript
+row: for (var i = 0; i < n; i++){
+    col: for (var j = 0; j < n; j++){
+        if(a[i][j] !== 0){
+            continue row;
+        }
+        return i;
+    }
+    return -1;
+}
+```
+Python, however, does not support labeled loops. There was a proposal to include named loops in python <a href="https://www.python.org/dev/peps/pep-3136/">PEP3136</a>, however, it was rejected with an explanation <a href="https://mail.python.org/pipermail/python-3000/2007-July/008663.html">here</a>. It was rejected on the basis that code so complicated to
+require this feature is very rare. However, if you wanted to accomplish this in Python, you could still do so without a goto. Python has a cool `all` function that returns `True` if all elements of the iterable are `True`. Since zero is falsy in Python, this function can easily be used in order to create a solution in Python.
+```python
+# Python
+for i, row in enumerate(a):
+  if (all(row)): continue
+  return i
+return -1
+```
+
+All in all, it seems as if goto statements are really not needed for higher-level programming languages. I do, however, think that they may be acceptable in some cases in C since C does not have these nice, powerful language constructs.
 
 4)
 ```c
