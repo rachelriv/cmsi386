@@ -63,8 +63,7 @@ require this feature is very rare. However, if you wanted to accomplish this in 
 ```python
 # Python
 for i, row in enumerate(a):
-  if (all(row)): continue
-  return i
+  if (all(x == 0 for x in row)): return i
 return -1
 ```
 
