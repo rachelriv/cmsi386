@@ -67,6 +67,15 @@ for i, row in enumerate(a):
 return -1
 ```
 
+Alternatively, you could use Python's built in `any` function to see if any element in the row is a non-zero number.
+```python
+# Python
+for i, row in enumerate(a):
+  if (any(row)): continue
+  return i
+return -1
+```
+
 All in all, it seems as if goto statements are really not needed for higher-level programming languages. I do, however, think that they may be acceptable in some cases in C since C does not have these nice, powerful language constructs.
 
 4)
